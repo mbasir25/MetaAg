@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/androidproject/app/src/main/res/layout-v28/activity_main2.xml" value="0.36367753623188404" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_drawpoly.xml" value="0.17604166666666668" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_field_insert.xml" value="0.17604166666666668" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_get_gps.xml" value="0.16" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_main2.xml" value="0.4" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_operation.xml" value="0.25416666666666665" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_registration.xml" value="0.20984455958549222" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_showmap.xml" value="0.22474747474747475" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/home.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

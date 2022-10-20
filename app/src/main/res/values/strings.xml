@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="meta_ag">META AG</string>
+    <string name="manual_input">Manual Input</string>
+    <string name="join_now">Join now</string>
+    <string name="button">Button</string>
+    <string name="title_activity_field_insert">field_insert</string>
+</resources>
