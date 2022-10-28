@@ -91,6 +91,7 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
+        gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         gMap.setOnMapClickListener(latLng -> {
             MarkerOptions markerOptions = new MarkerOptions().position(latLng);
             Marker marker = gMap.addMarker(markerOptions);
