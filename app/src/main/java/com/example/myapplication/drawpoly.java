@@ -27,7 +27,7 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
     GoogleMap gMap;
     Button save_map, clear_map;
     CheckBox checkBox;
-
+//
     Polygon polygon = null;
     List<LatLng> latLngList = new ArrayList<>();
     List<Marker> markerList = new ArrayList<>();
@@ -38,75 +38,72 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawpoly);
-
-        supportMapFragment = (SupportMapFragment)  getSupportFragmentManager().findFragmentById(R.id.google_map);
+////
+        supportMapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(this);
         checkBox = findViewById(R.id.checkBox);
         save_map = findViewById(R.id.save_map);
         clear_map = findViewById(R.id.clear_map);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-               if (b) {
-                   if (polygon == null) return;
-                   polygon.setFillColor(Color.BLUE);
-               } else {
-                   polygon.setFillColor(Color.TRANSPARENT);
+        checkBox.setOnCheckedChangeListener((compoundButton, ticked) -> {
+            if (polygon == null) return;
 
-               }
+            if (ticked) {
+               polygon.setFillColor(Color.BLUE);
+           } else {
+               polygon.setFillColor(Color.TRANSPARENT);
+           }
 
-            }
         });
-        save_map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              if (polygon != null) {
-                  polygon.remove();
-              }
+        save_map.setOnClickListener(view -> {
+          if (polygon != null) {
+              polygon.remove();
+          }
+            if (latLngList.size()>0) {
                 PolygonOptions polygonOptions = new PolygonOptions().addAll(latLngList)
                         .clickable(true);
-              polygon = gMap.addPolygon(polygonOptions);
-              //color
-               polygon.setFillColor(Color.BLUE);
-               polygon.setStrokeColor(Color.BLUE);
 
-               if (checkBox.isChecked()){
-                   polygon.setFillColor(Color.BLUE);
-               }
+                polygon = gMap.addPolygon(polygonOptions);
+                //color
+                polygon.setFillColor(Color.BLUE);
+                polygon.setStrokeColor(Color.BLUE);
 
-            }
-        });
-
-        clear_map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (polygon != null) {
-                    polygon.remove();
+                if (checkBox.isChecked()) {
+                    polygon.setFillColor(Color.BLUE);
                 }
-                for (Marker marker : markerList) marker.remove();
-                latLngList.clear();
-                checkBox.setChecked(false);
-
             }
+
         });
 
+        clear_map.setOnClickListener(view -> {
+            if (polygon != null) {
+                polygon.remove();
+            }
+            for (Marker marker : markerList) marker.remove();
+            latLngList.clear();
+            checkBox.setChecked(false);
 
+        });
+
+//
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
-        gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(@NonNull LatLng latLng) {
-                MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-                Marker marker = gMap.addMarker(markerOptions);
-                latLngList.add(latLng);
-                markerList.add(marker);
+        gMap.setOnMapClickListener(latLng -> {
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+            Marker marker = gMap.addMarker(markerOptions);
+            latLngList.add(latLng);
+            markerList.add(marker);
 
-            }
         });
+
     }
+
+//    @Override
+//    public void onMapReady(@NonNull GoogleMap googleMap) {
+//
+//    }
 
 }

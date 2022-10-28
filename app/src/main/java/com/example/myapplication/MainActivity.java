@@ -17,12 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         join = findViewById(R.id.btn_join);
 
-        join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),showmap.class));
-            }
-        });
+        join.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),drawpoly.class)));
 
     }
 }
