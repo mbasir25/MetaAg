@@ -5,4 +5,5 @@
     <string name="join_now">Join now</string>
     <string name="button">Button</string>
     <string name="title_activity_field_insert">field_insert</string>
+    <string name="insert_field_name">Insert field name</string>
 </resources>

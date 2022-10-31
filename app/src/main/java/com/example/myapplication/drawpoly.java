@@ -32,6 +32,7 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
     CheckBox checkBox;
     EditText field_name;
     Button draw_map;
+    boolean valid= true;
 
     Polygon polygon = null;
     List<LatLng> latLngList = new ArrayList<>();
@@ -100,21 +101,26 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 
         save_map.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {  
-                if (polygon == null) return;
-                if (polygon != null) {
-                    String name = field_name.getText().toString();
+            public void onClick(View view) {
+                checkField (field_name);
+                if (valid & polygon != null) {
 
-                    filed_holder poly =new filed_holder(polygon);
-                    FirebaseDatabase field = FirebaseDatabase.getInstance();
-                    DatabaseReference node = field.getReference("Field");
+                        String name = field_name.getText().toString();
 
-                    node.child(name).setValue(poly);
+                        filed_holder poly = new filed_holder(polygon);
+                        FirebaseDatabase field = FirebaseDatabase.getInstance();
+                        DatabaseReference node = field.getReference("Field");
 
-                    polygon.remove();
-                    field_name.setText("");
-                    Toast.makeText(drawpoly.this, "Successfully inserted", Toast.LENGTH_SHORT).show();
+                        node.child(name).setValue(poly);
 
+                        polygon.remove();
+                        field_name.setText("");
+                        Toast.makeText(drawpoly.this, "Successfully inserted", Toast.LENGTH_SHORT).show();
+
+
+                }
+                else {
+                    Toast.makeText(drawpoly.this, "Insertion Failed", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -137,6 +143,17 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 
         });
 
+    }
+    public boolean checkField(EditText textField) {
+        if (textField.getText().toString().isEmpty()){
+            textField.setError("Error");
+            valid = false;
+        }
+        else {
+            valid = true;
+
+        }
+        return valid;
     }
 
 

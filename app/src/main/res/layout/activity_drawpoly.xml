@@ -22,16 +22,20 @@
         android:id="@+id/field_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:autofillHints="Insert field name"
         android:background="@color/white"
         android:ems="12"
+        android:hint="@string/insert_field_name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toBottomOf="@+id/map"
+        tools:layout_marginBottom="5dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout9"
@@ -66,8 +70,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#b5b6b5"
+            android:background="#CFD3CF"
             android:text="draw"
+            android:layout_marginHorizontal="5dp"
+            android:padding="10dp"
             tools:ignore="TextContrastCheck" />
 
         <!--        <TextView-->
@@ -86,6 +92,8 @@
             android:background="#b5b6b5"
             android:text="Clear"
             android:textColor="#FDFAF9"
+            android:padding="10dp"
+            android:layout_marginRight="5dp"
             tools:ignore="TextContrastCheck" />
 
         <Button
