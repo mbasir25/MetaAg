@@ -9,14 +9,32 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="398dp"
-        android:layout_height="653dp"
+        android:layout_width="399dp"
+        android:layout_height="544dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089" />
+
+    <EditText
+        android:id="@+id/field_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="Insert field name"
+        android:background="@color/white"
+        android:ems="12"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map" />
 
     <LinearLayout
+        android:id="@+id/linearLayout9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -35,30 +53,30 @@
             android:layout_marginBottom="32dp"
             android:text="CheckBox" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="       "-->
-<!--            tools:ignore="SpeakableTextPresentCheck" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/textView2"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:text="       "-->
+        <!--            tools:ignore="SpeakableTextPresentCheck" />-->
 
         <Button
-            android:id="@+id/save_map"
+            android:id="@+id/draw_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#b5b6b5"
-            android:text="Save"
+            android:text="draw"
             tools:ignore="TextContrastCheck" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView3"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="       "-->
-<!--            tools:ignore="SpeakableTextPresentCheck" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/textView3"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:text="       "-->
+        <!--            tools:ignore="SpeakableTextPresentCheck" />-->
 
         <Button
             android:id="@+id/clear_map"
@@ -69,6 +87,14 @@
             android:text="Clear"
             android:textColor="#FDFAF9"
             tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/save_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Save" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
