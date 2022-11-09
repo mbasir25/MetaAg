@@ -6,4 +6,12 @@
     <string name="button">Button</string>
     <string name="title_activity_field_insert">field_insert</string>
     <string name="insert_field_name">Insert field name</string>
+    <string name="permission_rationale">Location permission is needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+    <string name="settings">Settings</string>
+    <string name="insert_op_data">Insert Op Data</string>
+    <string name="user_profile">User Profile</string>
+    <string name="insert_sale_info">Insert Sale info</string>
+    <string name="insert_cost">Insert Cost</string>
+    <string name="view_report">View Report</string>
 </resources>
