@@ -25,6 +25,13 @@
         <activity
             android:name=".backg_gps"
             android:exported="false" />
+<!--         reciever inserted and set true-->
+        <receiver android:name=".LocationUpdatesBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.location.sample.locationupdatespendingintent.LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".getgps"
@@ -34,9 +41,9 @@
         <activity
             android:name=".insert_data"
             android:exported="false" />
-        <activity
-            android:name=".showmap"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".showmap"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".drawpoly"
             android:exported="false" />
@@ -78,6 +85,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <meta-data
             android:name="preloaded_fonts"
