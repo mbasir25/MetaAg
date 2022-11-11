@@ -13,7 +13,7 @@ public class LocationRequestHelper {
 
     private LocationRequestHelper(Context context) {
         mContext = context;
-        mSharedPreferences = context.getSharedPreferences("com.freakyjolly.demobackgroundlocation", Context.MODE_PRIVATE);
+        mSharedPreferences = context.getSharedPreferences("com.example.myapplication", Context.MODE_PRIVATE);
         mSharedPreferencesEditor = mSharedPreferences.edit();
     }
 
@@ -88,7 +88,7 @@ public class LocationRequestHelper {
     /**
      * Retrieves boolean value from preference
      */
-    public boolean getBoolanValue(String keyFlag, boolean defaultValue) {
+    public boolean getBooleanValue(String keyFlag, boolean defaultValue) {
         return mSharedPreferences.getBoolean(keyFlag, defaultValue);
     }
 

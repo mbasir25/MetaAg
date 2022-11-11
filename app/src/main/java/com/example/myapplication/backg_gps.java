@@ -91,14 +91,14 @@ public class backg_gps extends AppCompatActivity implements
         } else {
         }
         updateTextField(this);
-        updateButtonsState(LocationRequestHelper.getInstance(this).getBoolanValue("RequestingLocationUpdates", false));
+        updateButtonsState(LocationRequestHelper.getInstance(this).getBooleanValue("RequestingLocationUpdates", false));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateTextField(this);
-        updateButtonsState(LocationRequestHelper.getInstance(this).getBoolanValue("RequestingLocationUpdates", false));
+        updateButtonsState(LocationRequestHelper.getInstance(this).getBooleanValue("RequestingLocationUpdates", false));
     }
 
     @Override
@@ -350,7 +350,7 @@ public class backg_gps extends AppCompatActivity implements
                 }
             });
         }
-        updateButtonsState(LocationRequestHelper.getInstance(this).getBoolanValue("RequestingLocationUpdates", false));
+        updateButtonsState(LocationRequestHelper.getInstance(this).getBooleanValue("RequestingLocationUpdates", false));
     }
 
     public void updateButtonsState(boolean requestingLocationUpdates) {
