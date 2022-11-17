@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -76,7 +77,7 @@ public class backg_gps extends AppCompatActivity implements
         createLocationRequest();
         buildLocationSettingsRequest();
 
-//        mActivityRecognitionClient = new ActivityRecognitionClient(this);
+      mActivityRecognitionClient = ActivityRecognition.getClient(this);
     }
 
 
