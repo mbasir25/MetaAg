@@ -3,6 +3,16 @@ package com.example.myapplication;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class LocationRequestHelper {
 
 
@@ -55,6 +65,7 @@ public class LocationRequestHelper {
         mSharedPreferencesEditor.putLong(key, value);
         mSharedPreferencesEditor.commit();
     }
+// store lists
 
     /**
      * Stores boolean value in preference
@@ -111,4 +122,27 @@ public class LocationRequestHelper {
         mSharedPreferencesEditor.clear().commit();
     }
 
+//    public void setValue(String key, filed_holder poly) {
+//        Set<String> set = new HashSet<String>();
+//        set.addAll((Collection<? extends String>) poly);
+//        mSharedPreferencesEditor.putStringSet(key, set);
+//        mSharedPreferencesEditor.commit();
+
+//    }
+
+//    public Set<String> getValue(String key, Object poly) {
+//
+//    }
+//
+//
+    public void setValue(String key, List<LatLng> latLngList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(latLngList);
+        mSharedPreferencesEditor.putString(key, json);
+        mSharedPreferencesEditor.commit();
+    }
+
+    public Set<String> getValue(String key, Object o) {
+        return mSharedPreferences.getStringSet(key, null);
+    }
 }

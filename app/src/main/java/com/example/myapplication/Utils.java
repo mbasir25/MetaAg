@@ -38,6 +38,8 @@ public class Utils {
     public static final float SMALLEST_DISPLACEMENT = 1.0F;
     public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
     public static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 2;
+//    public static Double lat;
+//    public static Double lon;
 
     static void setLocationUpdatesResult(Context context, String value) {
         PreferenceManager.getDefaultSharedPreferences(context)
@@ -69,6 +71,17 @@ public class Utils {
             //firstLocation.getBearing();
             LocationRequestHelper.getInstance(context).setValue("locationTextInApp","You are at "+getAddress(firstLocation,context)+"("+nowDate+") with accuracy "+firstLocation.getAccuracy()+" Latitude:"+firstLocation.getLatitude()+" Longitude:"+firstLocation.getLongitude()+" Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing());
             showNotificationOngoing(context, broadcastevent,"");
+
+
+//            new lat long defined here
+//            lat =   firstLocation.getLatitude();
+//            lon =  firstLocation.getLongitude();
+
+
+
+
+
+
         }
     }
 

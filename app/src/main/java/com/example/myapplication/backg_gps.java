@@ -31,6 +31,7 @@ import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
@@ -301,6 +302,7 @@ public class backg_gps extends AppCompatActivity implements
 
     public static void updateTextField(Context context) {
         mLocationUpdatesResultView.setText(LocationRequestHelper.getInstance(context).getStringValue("locationTextInApp",""));
+//        Log.e("loc", LocationRequestHelper.getInstance(context).getStringValue("locationTextInApp",""));
     }
 
     @SuppressLint("MissingPermission")
@@ -315,9 +317,11 @@ public class backg_gps extends AppCompatActivity implements
                     Utils.UPDATE_INTERVAL,
                     getPendingIntent());
 
+
             task.addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void result) {
+
 
                 }
             });
@@ -359,6 +363,7 @@ public class backg_gps extends AppCompatActivity implements
         if (requestingLocationUpdates) {
             mRequestUpdatesButton.setVisibility(View.GONE);
             mRemoveUpdatesButton.setVisibility(View.VISIBLE);
+
         } else {
             mRequestUpdatesButton.setVisibility(View.VISIBLE);
             mRemoveUpdatesButton.setVisibility(View.GONE);

@@ -22,6 +22,7 @@ public class LocationUpdatesBroadcastReceiver extends BroadcastReceiver {
                 Utils.setLocationUpdatesResult(context, DateFormat.getDateTimeInstance().format(new Date()));
                 Utils.getLocationUpdates(context,intent,"PROCESS_UPDATES");
 
+
             }
         }
     }
