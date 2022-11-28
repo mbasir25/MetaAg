@@ -12,9 +12,20 @@ import android.location.Location;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.google.maps.android.PolyUtil;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,8 +49,20 @@ public class Utils {
     public static final float SMALLEST_DISPLACEMENT = 1.0F;
     public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
     public static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 2;
+    
+    private static GoogleMap gMap;
+    private static Polygon polygon;
+    private static TinyDB tinydb;
+
+    static String c;
+    Context context;
+
+//    Polygon polygon;
+
 //    public static Double lat;
 //    public static Double lon;
+
+    
 
     static void setLocationUpdatesResult(Context context, String value) {
         PreferenceManager.getDefaultSharedPreferences(context)
@@ -63,16 +86,19 @@ public class Utils {
             Location firstLocation = locations.get(0);
 
             getAddress(firstLocation,context);
+            checkGeofence(firstLocation, context);
             //firstLocation.getAccuracy();
             //firstLocation.getLatitude();
             //firstLocation.getLongitude();
             //firstLocation.getAccuracy();
             //firstLocation.getSpeed();
             //firstLocation.getBearing();
-            LocationRequestHelper.getInstance(context).setValue("locationTextInApp","You are at "+getAddress(firstLocation,context)+"("+nowDate+") with accuracy "+firstLocation.getAccuracy()+" Latitude:"+firstLocation.getLatitude()+" Longitude:"+firstLocation.getLongitude()+" Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing());
-            showNotificationOngoing(context, broadcastevent,"");
+            LocationRequestHelper.getInstance(context).setValue("locationTextInApp","You are at "+getAddress(firstLocation,context)+
+                    "("+nowDate+") with accuracy "+firstLocation.getAccuracy()+" Latitude:"+firstLocation.getLatitude()+" Longitude:"+firstLocation.getLongitude()+
+                    " Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing() +" field   "+ checkGeofence(firstLocation, context));
+            showNotificationOngoing(context, broadcastevent,"" +" field   "+ checkGeofence(firstLocation, context));
 
-
+//            Log.e(TAG, target);
 //            new lat long defined here
 //            lat =   firstLocation.getLatitude();
 //            lon =  firstLocation.getLongitude();
@@ -142,5 +168,67 @@ public class Utils {
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
     }
+
+
+    public static String checkGeofence(Location location, Context context){
+
+        // Problem here ................. discuss !!!!
+
+        tinydb = new TinyDB(context);
+        LatLng locate = new LatLng(location.getLatitude(), location.getLongitude());
+        ArrayList<String> fieldlist =  tinydb.getListString("cashedpolygons");
+        Gson gson = new Gson();
+
+        for (String field : fieldlist){
+
+            Type listType = new TypeToken<List<String>>(){}.getType();
+
+            List<String> list = gson.fromJson(field,listType);
+
+            String name = list.get(0);
+            String latlng = list.get(1);
+            ModelFieldObjectCreator[] latLngObj = gson.fromJson(latlng, ModelFieldObjectCreator[].class);
+
+            List<LatLng> polyPoints = new ArrayList<>();
+            for (ModelFieldObjectCreator s : latLngObj) {
+                Double lat = s.getLatitude();
+                Double lng = s.getLongitude();
+                LatLng point = new LatLng(lat,lng);
+                polyPoints.add(point);
+//                Log.i(TAG, "checkGeofence: "+s);
+
+            }
+////                String[] latLng = s.split(",");
+////                double latitude = Double.parseDouble(latLng[0]);
+////                double longitude = Double.parseDouble(latLng[1]);
+////                LatLng point = new LatLng(latitude, longitude);
+////                polyPoints.add(point);
+//            }
+//            PolygonOptions polygonOptions = new PolygonOptions().addAll(polyPoints);
+//            polygon = gMap.addPolygon(polygonOptions);
+
+            Boolean match =  PolyUtil.containsLocation(locate, polyPoints, false);
+
+            if (match == true){
+                c =  name;
+
+            }else {
+                c =" not in field!! ";
+
+            }
+
+
+        }
+
+
+        return c;
+    }
+
+
+//
+
+
+
+
 }
 

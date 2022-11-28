@@ -51,6 +51,7 @@ dependencies {
 //    implementation 'com.androidx.support:design:27.1.1'
     implementation 'com.shamanland:xdroid-toaster:0.0.10'
     implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 
 
 

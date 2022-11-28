@@ -370,4 +370,5 @@ public class backg_gps extends AppCompatActivity implements
         }
     }
 
+
 }

@@ -150,11 +150,12 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 //                              using tinydb for accessing sharedpreference
 
                                 ArrayList<String> fieldlist =  tinydb.getListString("cashedpolygons");
-                                ArrayList<List<String>> newList = new ArrayList<>();
+//                                ArrayList<List<String>> newList = new ArrayList<>();
                                 List<String> newfield = listOfField(name, latLngList);
-                                newList.add(newfield);
-                                String newWholeList = objGson.toJson(newList);
-                                fieldlist.add(newWholeList);
+                                String newf = objGson.toJson(newfield);
+                                fieldlist.add(newf);
+//                                String newWholeList = objGson.toJson(fieldlist);
+//                                fieldlist.add(newWholeList);
                                 tinydb.putListString("cashedpolygons", fieldlist);
                                 fieldStored = true;
 
@@ -190,11 +191,13 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 
                         if (fieldStored == false) {
                         ArrayList<String> newfieldList = new ArrayList<>();
-                        ArrayList<List<String>> newList = new ArrayList<>();
+//                        ArrayList<List<String>> newList = new ArrayList<>();
                         List<String> newfield = listOfField(name, latLngList);
-                        newList.add(newfield);
-                        String newWholeList = objGson.toJson(newList);
-                        newfieldList.add(newWholeList);
+                        String newf = objGson.toJson(newfield);
+                        newfieldList.add(newf);
+//                        newList.add(newfield);
+//                        String newWholeList = objGson.toJson(newList);
+//                        newfieldList.add(newWholeList);
                         tinydb.putListString("cashedpolygons", newfieldList);
                         }
 
@@ -250,7 +253,8 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
         ArrayList<String> field = new ArrayList<>();
         field.add(name);
         field.add(jsonLatLng);
-
+//
         return field;
     }
+
 }
