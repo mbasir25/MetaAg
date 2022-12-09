@@ -11,6 +11,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Pair;
+
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -55,6 +57,8 @@ public class Utils {
     private static TinyDB tinydb;
 
     static String c;
+    static String text;
+    static long t;
     Context context;
 
 //    Polygon polygon;
@@ -72,7 +76,7 @@ public class Utils {
     }
 
     @SuppressLint("MissingPermission")
-    public static void getLocationUpdates(final Context context, final Intent intent, String broadcastevent)  {
+    public static void getLocationUpdates(final Context context, final Intent intent)  {
 
         LocationResult result = LocationResult.extractResult(intent);
         if (result != null) {
@@ -85,8 +89,16 @@ public class Utils {
             List<Location> locations = result.getLocations();
             Location firstLocation = locations.get(0);
 
+
             getAddress(firstLocation,context);
-            checkGeofence(firstLocation, context);
+            String fieldname = checkGeofence(firstLocation, context);
+            Pair<String, Long> p= getEntryExitTime(today, fieldname);
+            Date entext = new Date(p.second);
+            SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+            String entExtTime = timeformater.format(entext);
+
+
+
             //firstLocation.getAccuracy();
             //firstLocation.getLatitude();
             //firstLocation.getLongitude();
@@ -95,13 +107,15 @@ public class Utils {
             //firstLocation.getBearing();
             LocationRequestHelper.getInstance(context).setValue("locationTextInApp","You are at "+getAddress(firstLocation,context)+
                     "("+nowDate+") with accuracy "+firstLocation.getAccuracy()+" Latitude:"+firstLocation.getLatitude()+" Longitude:"+firstLocation.getLongitude()+
-                    " Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing() +" field   "+ checkGeofence(firstLocation, context));
-            showNotificationOngoing(context, broadcastevent,"" +" field   "+ checkGeofence(firstLocation, context));
-
+                    " Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing() +" field   "+ checkGeofence(firstLocation, context)+"  " + p.first + "  "+ entExtTime);
+//            showNotificationOngoing(context,"" +" field   "+ checkGeofence(firstLocation, context));
+//            ToDo!! if (p.first == "Exit Time"){ Start notification}
+//
 //            Log.e(TAG, target);
 //            new lat long defined here
 //            lat =   firstLocation.getLatitude();
 //            lon =  firstLocation.getLongitude();
+
 
 
 
@@ -144,7 +158,7 @@ public class Utils {
         return addressFragments;
     }
 
-    public static void showNotificationOngoing(Context context, String broadcastevent,String title) {
+    public static void showNotificationOngoing(Context context,String title) {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
@@ -222,6 +236,48 @@ public class Utils {
 
 
         return c;
+    }
+
+
+    public static Pair<String, Long> getEntryExitTime(Date date, String fieldName){
+        long mills = date.getTime();
+        long prevMills = tinydb.getLong("prevtime");
+
+        if (prevMills == 0) {
+            tinydb.putLong("prevtime", mills);
+            tinydb.putBoolean("PREV_IN_FIELD", false);
+        } else{
+            boolean PREV_IN_FIELD = tinydb.getBoolean("PREV_IN_FIELD");
+//            boolean PREV_IN_FIELD = tinydb.getBoolean("PREV_IN_FIELD");
+            if (fieldName != " not in field!! " && PREV_IN_FIELD == false){
+                long entryTime =  (mills + prevMills)/2;
+                tinydb.putBoolean("PREV_IN_FIELD", true);
+
+                 t = entryTime;
+                 text = "Entry Time";
+
+
+            }
+            if (fieldName == " not in field!! " && PREV_IN_FIELD == true){
+                Long exitTime =  (mills + prevMills)/2;
+                tinydb.putBoolean("PREV_IN_FIELD", false);
+                t = exitTime;
+                text = "Exit Time";
+
+
+            }
+
+
+
+
+            tinydb.putLong("prevtime", mills);
+//            tinydb.putBoolean("PREV_IN_FIELD", false);
+
+        }
+
+        return new Pair<String, Long>(text, t);
+
+
     }
 
 

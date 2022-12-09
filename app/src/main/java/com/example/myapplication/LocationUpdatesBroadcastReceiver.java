@@ -20,9 +20,9 @@ public class LocationUpdatesBroadcastReceiver extends BroadcastReceiver {
             final String action = intent.getAction();
             if (ACTION_PROCESS_UPDATES.equals(action)) {
                 Utils.setLocationUpdatesResult(context, DateFormat.getDateTimeInstance().format(new Date()));
-                Utils.getLocationUpdates(context,intent,"PROCESS_UPDATES");
+                Utils.getLocationUpdates(context,intent);
 
-
+//                "PROCESS_UPDATES"
             }
         }
     }
