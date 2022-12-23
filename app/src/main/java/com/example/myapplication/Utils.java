@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.google.maps.android.PolyUtil;
@@ -32,6 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -51,6 +54,7 @@ public class Utils {
     public static final float SMALLEST_DISPLACEMENT = 1.0F;
     public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
     public static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 2;
+    private static final String CHANNEL_ID = "Field Exit Channel";
     
     private static GoogleMap gMap;
     private static Polygon polygon;
@@ -66,7 +70,7 @@ public class Utils {
 //    public static Double lat;
 //    public static Double lon;
 
-    
+    static Gson objGson = new GsonBuilder().setPrettyPrinting().create();
 
     static void setLocationUpdatesResult(Context context, String value) {
         PreferenceManager.getDefaultSharedPreferences(context)
@@ -92,7 +96,7 @@ public class Utils {
 
             getAddress(firstLocation,context);
             String fieldname = checkGeofence(firstLocation, context);
-            Pair<String, Long> p= getEntryExitTime(today, fieldname);
+            Pair<String, Long> p= getEntryExitTime(today, fieldname);    // p is a pair of string activity (entry/exit) and long time
             Date entext = new Date(p.second);
             SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
             String entExtTime = timeformater.format(entext);
@@ -109,6 +113,83 @@ public class Utils {
                     "("+nowDate+") with accuracy "+firstLocation.getAccuracy()+" Latitude:"+firstLocation.getLatitude()+" Longitude:"+firstLocation.getLongitude()+
                     " Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing() +" field   "+ checkGeofence(firstLocation, context)+"  " + p.first + "  "+ entExtTime);
 //            showNotificationOngoing(context,"" +" field   "+ checkGeofence(firstLocation, context));
+            boolean NOTIFY_FLAG = tinydb.getBoolean("NOTIFY_FLAG");
+
+            if (p.first == "Exit Time" && NOTIFY_FLAG == true){
+
+                long entry_Time = tinydb.getLong("entry_time");
+                long exit_Time = tinydb.getLong("exit_time");
+
+                Date entry = new Date(entry_Time);
+                Date exit = new Date(exit_Time);
+                String fieldName = tinydb.getString("field_name");
+
+                SimpleDateFormat entxtimeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+                String s_Entry = entxtimeformater.format(entry);
+                String s_Exit =  entxtimeformater.format(exit);
+//                  make fields object list
+                Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(context).getAll();
+                boolean WORKFIELDS = false;
+                for (Map.Entry<String, ?> data_Entry : allEntries.entrySet()) {
+                    Log.i("workfields", data_Entry.getKey());
+                    if ("workedFields".equals(data_Entry.getKey())) {
+//                              using tinydb for accessing sharedpreference
+
+                        ArrayList<String> workedFieldList =  tinydb.getListString("workedFields");
+//                                ArrayList<List<String>> newList = new ArrayList<>();
+                        List<Pair> newWorkField = listOfWorkinField("Sami",entry_Time,exit_Time);
+                        String fieldDescription = objGson.toJson(newWorkField);
+                        List< String> fieldWorked = new ArrayList<>();
+                        fieldWorked.add(fieldName);
+                        fieldWorked.add(fieldDescription);
+                        String workedField = objGson.toJson(fieldWorked);
+                        workedFieldList.add(workedField);
+                        tinydb.putListString("workedFields", workedFieldList);
+                        WORKFIELDS = true;
+
+                    }
+                }
+                if (WORKFIELDS == false) {
+                    ArrayList<String> workedFieldList =  new ArrayList<>();
+//                                ArrayList<List<String>> newList = new ArrayList<>();
+                    List<Pair> newWorkField = listOfWorkinField("Sami",entry_Time,exit_Time);
+                    String fieldDescription = objGson.toJson(newWorkField);
+                    List< String> fieldWorked = new ArrayList<>();
+                    fieldWorked.add(fieldName);
+                    fieldWorked.add(fieldDescription);
+                    String workedField = objGson.toJson(fieldWorked);
+                    workedFieldList.add(workedField);
+                    tinydb.putListString("workedFields", workedFieldList);
+                }
+
+
+
+                NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                Notification notification;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    notification = new Notification.Builder(context)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentText("you worked in "+ fieldName)
+                            .setSubText("Entry at " + s_Entry+ " and " + "Exit at " + s_Exit)
+                            .setChannelId(CHANNEL_ID)
+                            .build();
+
+                    nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "field channel", NotificationManager.IMPORTANCE_HIGH));
+                }else
+                {
+                    notification = new Notification.Builder(context)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentText("you worked in "+ fieldName)
+                            .setSubText("Entry at " + s_Entry+ " and " + "Exit at " + s_Exit)
+                            .build();
+                }
+                nm.notify(100, notification);
+                tinydb.putBoolean("NOTIFY_FLAG", false);
+
+            }
+
+
+
 //            ToDo!! if (p.first == "Exit Time"){ Start notification}
 //
 //            Log.e(TAG, target);
@@ -158,30 +239,30 @@ public class Utils {
         return addressFragments;
     }
 
-    public static void showNotificationOngoing(Context context,String title) {
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-                new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification.Builder notificationBuilder = new Notification.Builder(context)
-                .setContentTitle(title + DateFormat.getDateTimeInstance().format(new Date()) + ":" + accuracy)
-                .setContentText(addressFragments.toString())
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentIntent(contentIntent)
-                .setOngoing(true)
-                .setStyle(new Notification.BigTextStyle().bigText(addressFragments.toString()))
-                .setAutoCancel(true);
-        notificationManager.notify(3, notificationBuilder.build());
-
-    }
-
-    public static void removeNotification(Context context){
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
-    }
+//    public static void showNotificationOngoing(Context context,String title) {
+//        NotificationManager notificationManager =
+//                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+//
+//        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+//                new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        Notification.Builder notificationBuilder = new Notification.Builder(context)
+//                .setContentTitle(title + DateFormat.getDateTimeInstance().format(new Date()) + ":" + accuracy)
+//                .setContentText(addressFragments.toString())
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setContentIntent(contentIntent)
+//                .setOngoing(true)
+//                .setStyle(new Notification.BigTextStyle().bigText(addressFragments.toString()))
+//                .setAutoCancel(true);
+//        notificationManager.notify(3, notificationBuilder.build());
+//
+//    }
+//
+//    public static void removeNotification(Context context){
+//        NotificationManager notificationManager =
+//                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.cancelAll();
+//    }
 
 
     public static String checkGeofence(Location location, Context context){
@@ -209,17 +290,10 @@ public class Utils {
                 Double lng = s.getLongitude();
                 LatLng point = new LatLng(lat,lng);
                 polyPoints.add(point);
-//                Log.i(TAG, "checkGeofence: "+s);
+//
 
             }
-////                String[] latLng = s.split(",");
-////                double latitude = Double.parseDouble(latLng[0]);
-////                double longitude = Double.parseDouble(latLng[1]);
-////                LatLng point = new LatLng(latitude, longitude);
-////                polyPoints.add(point);
-//            }
-//            PolygonOptions polygonOptions = new PolygonOptions().addAll(polyPoints);
-//            polygon = gMap.addPolygon(polygonOptions);
+////
 
             Boolean match =  PolyUtil.containsLocation(locate, polyPoints, false);
 
@@ -252,15 +326,18 @@ public class Utils {
             if (fieldName != " not in field!! " && PREV_IN_FIELD == false){
                 long entryTime =  (mills + prevMills)/2;
                 tinydb.putBoolean("PREV_IN_FIELD", true);
-
-                 t = entryTime;
-                 text = "Entry Time";
+                tinydb.putLong("entry_time", entryTime);
+                tinydb.putString("field_name", fieldName);
+                tinydb.putBoolean("NOTIFY_FLAG", true);
+                t = entryTime;
+                text = "Entry Time";
 
 
             }
             if (fieldName == " not in field!! " && PREV_IN_FIELD == true){
                 Long exitTime =  (mills + prevMills)/2;
                 tinydb.putBoolean("PREV_IN_FIELD", false);
+                tinydb.putLong("exit_time", exitTime);
                 t = exitTime;
                 text = "Exit Time";
 
@@ -277,6 +354,18 @@ public class Utils {
 
         return new Pair<String, Long>(text, t);
 
+
+    }
+    public static ArrayList listOfWorkinField(String user, Long entTime, Long extTime){
+        Gson gson = new Gson();
+        Pair<String, String> username = new Pair<>("user", user);
+        Pair<String, Long> ent_time =  new Pair<>("Entry time", entTime);
+        Pair<String, Long> ext_time =  new Pair<>("Entry time", extTime);
+        List<Pair> fieldDetail = new ArrayList<>();
+        fieldDetail.add(username);
+        fieldDetail.add(ent_time);
+        fieldDetail.add(ext_time);
+        return (ArrayList) fieldDetail;
 
     }
 

@@ -336,7 +336,7 @@ public class backg_gps extends AppCompatActivity implements
 
             LocationRequestHelper.getInstance(getApplicationContext()).setValue("RequestingLocationUpdates",false);
             mFusedLocationClient.removeLocationUpdates(getPendingIntent());
-            Utils.removeNotification(getApplicationContext());
+//            Utils.removeNotification(getApplicationContext());
 
             toast("Location Updates Stopped!");
 
