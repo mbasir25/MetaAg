@@ -5,53 +5,27 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class WorkedFieldObjMaker {
-    @SerializedName("field")
+    @SerializedName("first")
     @Expose
-    private Field field;
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
-    }
-
-}
-class Field {
-
-    @SerializedName("user")
+    private String first;
+    @SerializedName("second")
     @Expose
-    private String user;
-    @SerializedName("entry")
-    @Expose
-    private Long entry;
-    @SerializedName("exit")
-    @Expose
-    private Long exit;
+    private String second;
 
-    public String getUser() {
-        return user;
+    public String getFirst() {
+        return first;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setFirst(String first) {
+        this.first = first;
     }
 
-    public Long getEntry() {
-        return entry;
+    public String getSecond() {
+        return second;
     }
 
-    public void setEntry(Long entry) {
-        this.entry = entry;
-    }
-
-    public Long getExit() {
-        return exit;
-    }
-
-    public void setExit(Long exit) {
-        this.exit = exit;
+    public void setSecond(String second) {
+        this.second = second;
     }
 
 }

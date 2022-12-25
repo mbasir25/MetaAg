@@ -131,9 +131,9 @@ public class Utils {
                 Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(context).getAll();
                 boolean WORKFIELDS = false;
                 for (Map.Entry<String, ?> data_Entry : allEntries.entrySet()) {
-                    Log.i("workfields", data_Entry.getKey());
+//                    Log.i("workfields", data_Entry.getKey());
                     if ("workedFields".equals(data_Entry.getKey())) {
-//                              using tinydb for accessing sharedpreference
+//
 
                         ArrayList<String> workedFieldList =  tinydb.getListString("workedFields");
 //                                ArrayList<List<String>> newList = new ArrayList<>();
@@ -146,7 +146,7 @@ public class Utils {
                         workedFieldList.add(workedField);
                         tinydb.putListString("workedFields", workedFieldList);
                         WORKFIELDS = true;
-
+                        break;
                     }
                 }
                 if (WORKFIELDS == false) {
@@ -358,12 +358,13 @@ public class Utils {
     }
     public static ArrayList listOfWorkinField(String user, Long entTime, Long extTime){
         Gson gson = new Gson();
-        Pair<String, String> username = new Pair<>("user", user);
+
         Pair<String, Long> ent_time =  new Pair<>("Entry time", entTime);
+        Pair<String, String> username = new Pair<>("user", user);
         Pair<String, Long> ext_time =  new Pair<>("Entry time", extTime);
         List<Pair> fieldDetail = new ArrayList<>();
-        fieldDetail.add(username);
         fieldDetail.add(ent_time);
+        fieldDetail.add(username);
         fieldDetail.add(ext_time);
         return (ArrayList) fieldDetail;
 
