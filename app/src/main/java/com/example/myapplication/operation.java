@@ -113,8 +113,10 @@ public class operation extends AppCompatActivity {
 
                     }
                     }
+                tinydb.remove("workedFields");
 
                 }
+
 
         });
 

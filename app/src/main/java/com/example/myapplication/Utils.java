@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -55,15 +56,17 @@ public class Utils {
     public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
     public static final long MAX_WAIT_TIME = UPDATE_INTERVAL * 2;
     private static final String CHANNEL_ID = "Field Exit Channel";
-    
+    private  static final int REQ_CODE = 56;
+
     private static GoogleMap gMap;
     private static Polygon polygon;
     private static TinyDB tinydb;
 
-    static String c;
+//    static String c;
     static String text;
     static long t;
     Context context;
+
 
 //    Polygon polygon;
 
@@ -95,98 +98,110 @@ public class Utils {
 
 
             getAddress(firstLocation,context);
-            String fieldname = checkGeofence(firstLocation, context);
-            Pair<String, Long> p= getEntryExitTime(today, fieldname);    // p is a pair of string activity (entry/exit) and long time
-            Date entext = new Date(p.second);
-            SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
-            String entExtTime = timeformater.format(entext);
+
+            
+
+                                          // to do that for all fields
+
+                String fieldname = checkGeofence(firstLocation, context);   // checks all polygons returns the last. So, break it and run for whole cashedpolygon
+                Pair<String, Long> p = getEntryExitTime(today, fieldname);    // p is a pair of string activity (entry/exit) and long time
+                Date entext = new Date(p.second);
+                SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+                String entExtTime = timeformater.format(entext);
 
 
-
-            //firstLocation.getAccuracy();
-            //firstLocation.getLatitude();
-            //firstLocation.getLongitude();
-            //firstLocation.getAccuracy();
-            //firstLocation.getSpeed();
-            //firstLocation.getBearing();
-            LocationRequestHelper.getInstance(context).setValue("locationTextInApp","You are at "+getAddress(firstLocation,context)+
-                    "("+nowDate+") with accuracy "+firstLocation.getAccuracy()+" Latitude:"+firstLocation.getLatitude()+" Longitude:"+firstLocation.getLongitude()+
-                    " Speed:"+firstLocation.getSpeed()+" Bearing:"+firstLocation.getBearing() +" field   "+ checkGeofence(firstLocation, context)+"  " + p.first + "  "+ entExtTime);
+                //firstLocation.getAccuracy();
+                //firstLocation.getLatitude();
+                //firstLocation.getLongitude();
+                //firstLocation.getAccuracy();
+                //firstLocation.getSpeed();
+                //firstLocation.getBearing();
+                LocationRequestHelper.getInstance(context).setValue("locationTextInApp", "You are at " + getAddress(firstLocation, context) +
+                        "(" + nowDate + ") with accuracy " + firstLocation.getAccuracy() + " Latitude:" + firstLocation.getLatitude() + " Longitude:" + firstLocation.getLongitude() +
+                        " Speed:" + firstLocation.getSpeed() + " Bearing:" + firstLocation.getBearing() + " field   " + checkGeofence(firstLocation, context) + "  " + p.first + "  " + entExtTime);
 //            showNotificationOngoing(context,"" +" field   "+ checkGeofence(firstLocation, context));
-            boolean NOTIFY_FLAG = tinydb.getBoolean("NOTIFY_FLAG");
+                boolean NOTIFY_FLAG = tinydb.getBoolean("NOTIFY_FLAG");
 
-            if (p.first == "Exit Time" && NOTIFY_FLAG == true){
+                if (p.first == "Exit Time" && NOTIFY_FLAG == true) {
 
-                long entry_Time = tinydb.getLong("entry_time");
-                long exit_Time = tinydb.getLong("exit_time");
+                    long entry_Time = tinydb.getLong("entry_time");
+                    long exit_Time = tinydb.getLong("exit_time");
 
-                Date entry = new Date(entry_Time);
-                Date exit = new Date(exit_Time);
-                String fieldName = tinydb.getString("field_name");
+                    Date entry = new Date(entry_Time);
+                    Date exit = new Date(exit_Time);
+                    String fieldName = tinydb.getString("field_name");
 
-                SimpleDateFormat entxtimeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
-                String s_Entry = entxtimeformater.format(entry);
-                String s_Exit =  entxtimeformater.format(exit);
+                    SimpleDateFormat entxtimeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+                    String s_Entry = entxtimeformater.format(entry);
+                    String s_Exit = entxtimeformater.format(exit);
 //                  make fields object list
-                Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(context).getAll();
-                boolean WORKFIELDS = false;
-                for (Map.Entry<String, ?> data_Entry : allEntries.entrySet()) {
+                    Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(context).getAll();
+                    boolean WORKFIELDS = false;
+                    for (Map.Entry<String, ?> data_Entry : allEntries.entrySet()) {
 //                    Log.i("workfields", data_Entry.getKey());
-                    if ("workedFields".equals(data_Entry.getKey())) {
+                        if ("workedFields".equals(data_Entry.getKey())) {
 //
 
-                        ArrayList<String> workedFieldList =  tinydb.getListString("workedFields");
+                            ArrayList<String> workedFieldList = tinydb.getListString("workedFields");
 //                                ArrayList<List<String>> newList = new ArrayList<>();
-                        List<Pair> newWorkField = listOfWorkinField("Sami",entry_Time,exit_Time);
+                            List<Pair> newWorkField = listOfWorkinField("Sami", entry_Time, exit_Time);
+                            String fieldDescription = objGson.toJson(newWorkField);
+                            List<String> fieldWorked = new ArrayList<>();
+                            fieldWorked.add(fieldName);
+                            fieldWorked.add(fieldDescription);
+                            String workedField = objGson.toJson(fieldWorked);
+                            workedFieldList.add(workedField);
+                            tinydb.putListString("workedFields", workedFieldList);
+                            WORKFIELDS = true;
+                            break;
+                        }
+                    }
+                    if (WORKFIELDS == false) {
+                        ArrayList<String> workedFieldList = new ArrayList<>();
+//                                ArrayList<List<String>> newList = new ArrayList<>();
+                        List<Pair> newWorkField = listOfWorkinField("Sami", entry_Time, exit_Time);
                         String fieldDescription = objGson.toJson(newWorkField);
-                        List< String> fieldWorked = new ArrayList<>();
+                        List<String> fieldWorked = new ArrayList<>();
                         fieldWorked.add(fieldName);
                         fieldWorked.add(fieldDescription);
                         String workedField = objGson.toJson(fieldWorked);
                         workedFieldList.add(workedField);
                         tinydb.putListString("workedFields", workedFieldList);
-                        WORKFIELDS = true;
-                        break;
                     }
+
+
+                    NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                    Notification notification;
+
+                    PendingIntent contentIntent = PendingIntent.getActivity(context, REQ_CODE, new Intent(context, operation.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
+//                    Intent iNotify = new Intent(context, operation.class);
+//
+//                PendingIntent pi = PendingIntent.getActivity(context, REQ_CODE, iNotify);
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        notification = new Notification.Builder(context)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentText("you worked in " + fieldName)
+                                .setSubText("Entry at " + s_Entry + " and " + "Exit at " + s_Exit)
+                                .setContentIntent(contentIntent)
+                                .setChannelId(CHANNEL_ID)
+                                .build();
+
+                        nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "field channel", NotificationManager.IMPORTANCE_HIGH));
+                    } else {
+                        notification = new Notification.Builder(context)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentText("you worked in " + fieldName)
+                                .setSubText("Entry at " + s_Entry + " and " + "Exit at " + s_Exit)
+                                .setContentIntent(contentIntent)
+                                .build();
+                    }
+                    nm.notify(100, notification);
+                    tinydb.putBoolean("NOTIFY_FLAG", false);
+
                 }
-                if (WORKFIELDS == false) {
-                    ArrayList<String> workedFieldList =  new ArrayList<>();
-//                                ArrayList<List<String>> newList = new ArrayList<>();
-                    List<Pair> newWorkField = listOfWorkinField("Sami",entry_Time,exit_Time);
-                    String fieldDescription = objGson.toJson(newWorkField);
-                    List< String> fieldWorked = new ArrayList<>();
-                    fieldWorked.add(fieldName);
-                    fieldWorked.add(fieldDescription);
-                    String workedField = objGson.toJson(fieldWorked);
-                    workedFieldList.add(workedField);
-                    tinydb.putListString("workedFields", workedFieldList);
-                }
-
-
-
-                NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                Notification notification;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    notification = new Notification.Builder(context)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentText("you worked in "+ fieldName)
-                            .setSubText("Entry at " + s_Entry+ " and " + "Exit at " + s_Exit)
-                            .setChannelId(CHANNEL_ID)
-                            .build();
-
-                    nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID, "field channel", NotificationManager.IMPORTANCE_HIGH));
-                }else
-                {
-                    notification = new Notification.Builder(context)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentText("you worked in "+ fieldName)
-                            .setSubText("Entry at " + s_Entry+ " and " + "Exit at " + s_Exit)
-                            .build();
-                }
-                nm.notify(100, notification);
-                tinydb.putBoolean("NOTIFY_FLAG", false);
-
-            }
+            
 
 
 
@@ -274,6 +289,8 @@ public class Utils {
         ArrayList<String> fieldlist =  tinydb.getListString("cashedpolygons");
         Gson gson = new Gson();
 
+        String c = new String();
+
         for (String field : fieldlist){
 
             Type listType = new TypeToken<List<String>>(){}.getType();
@@ -300,13 +317,19 @@ public class Utils {
             if (match == true){
                 c =  name;
 
+                break;
+
+
             }else {
                 c =" not in field!! ";
 
             }
 
 
+
+
         }
+
 
 
         return c;
@@ -317,32 +340,55 @@ public class Utils {
         long mills = date.getTime();
         long prevMills = tinydb.getLong("prevtime");
 
-        if (prevMills == 0) {
+
+        if (prevMills == 0 ) {
             tinydb.putLong("prevtime", mills);
             tinydb.putBoolean("PREV_IN_FIELD", false);
+            tinydb.putString("prevField" , "");
         } else{
             boolean PREV_IN_FIELD = tinydb.getBoolean("PREV_IN_FIELD");
+//            String prevField = tinydb.getString("prevField");
 //            boolean PREV_IN_FIELD = tinydb.getBoolean("PREV_IN_FIELD");
-            if (fieldName != " not in field!! " && PREV_IN_FIELD == false){
-                long entryTime =  (mills + prevMills)/2;
-                tinydb.putBoolean("PREV_IN_FIELD", true);
-                tinydb.putLong("entry_time", entryTime);
-                tinydb.putString("field_name", fieldName);
-                tinydb.putBoolean("NOTIFY_FLAG", true);
-                t = entryTime;
-                text = "Entry Time";
-
+            if (fieldName != " not in field!! " && PREV_IN_FIELD == false ){
+                    long entryTime = (mills - 2000);
+                    tinydb.putBoolean("PREV_IN_FIELD", true);
+                    tinydb.putLong("entry_time", entryTime);
+                    tinydb.putString("field_name", fieldName);
+                    tinydb.putBoolean("NOTIFY_FLAG", true);
+                    t = entryTime;
+                    text = "Entry Time";
+                    tinydb.putString("prevField" , fieldName);
+                }
+            if (fieldName != " not in field!! " && PREV_IN_FIELD == true){
+                String prevField = tinydb.getString("prevField");
+                boolean transition = fieldName.equals(prevField);
+                if (transition == false){
+                    long exitTime =  prevMills;
+                    t = exitTime;
+                    text = "Exit Time";
+                    tinydb.putString("prevField" , fieldName );
+                    tinydb.putBoolean("PREV_IN_FIELD", false);
+                } else {
+                    tinydb.putBoolean("PREV_IN_FIELD", true);
+                    tinydb.putString("prevField" , fieldName );
+                    t = tinydb.getLong("entry_time");
+                    text = "Entry Time";
+                }
 
             }
+
+
             if (fieldName == " not in field!! " && PREV_IN_FIELD == true){
-                Long exitTime =  (mills + prevMills)/2;
+                long exitTime =  (mills + prevMills)/2;
                 tinydb.putBoolean("PREV_IN_FIELD", false);
                 tinydb.putLong("exit_time", exitTime);
                 t = exitTime;
                 text = "Exit Time";
+                tinydb.putString("prevField" , "");
+
+           }
 
 
-            }
 
 
 
@@ -361,7 +407,7 @@ public class Utils {
 
         Pair<String, Long> ent_time =  new Pair<>("Entry time", entTime);
         Pair<String, String> username = new Pair<>("user", user);
-        Pair<String, Long> ext_time =  new Pair<>("Entry time", extTime);
+        Pair<String, Long> ext_time =  new Pair<>("Exit time", extTime);
         List<Pair> fieldDetail = new ArrayList<>();
         fieldDetail.add(ent_time);
         fieldDetail.add(username);
