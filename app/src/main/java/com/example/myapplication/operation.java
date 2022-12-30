@@ -148,22 +148,19 @@ public class operation extends AppCompatActivity {
         long diff = Long.valueOf(exitString) -Long.valueOf(entString);
 
 
+
         long diffSeconds = diff / 1000 % 60;
         long diffMinutes = diff / (60 * 1000) % 60;
         long diffHours = diff / (60 * 60 * 1000);
 
-        String workeTime  = new String(diffHours + "Hr. " +diffMinutes + "mins. "+ diffSeconds +"sec." );
-
+        String workeTime = diffHours + "Hr. " + diffMinutes + "mins. " + diffSeconds + "sec.";
 
 
         ObjectEntryExitUserCreator desc = new ObjectEntryExitUserCreator(entry, user, exit, workeTime);
 
-        Map<String, ObjectEntryExitUserCreator> fieldMap= new HashMap<String, ObjectEntryExitUserCreator>();
 
-        fieldMap.put(entry, desc);
+        return desc;
 
-
-       return desc;
 
     }
 

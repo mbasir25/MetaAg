@@ -103,11 +103,11 @@ public class Utils {
 
                                           // to do that for all fields
 
-                String fieldname = checkGeofence(firstLocation, context);   // checks all polygons returns the last. So, break it and run for whole cashedpolygon
-                Pair<String, Long> p = getEntryExitTime(today, fieldname);    // p is a pair of string activity (entry/exit) and long time
-                Date entext = new Date(p.second);
-                SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
-                String entExtTime = timeformater.format(entext);
+            String fieldname = checkGeofence(firstLocation, context);   // checks all polygons returns the last. So, break it and run for whole cashedpolygon
+            Pair<String, Long> p = getEntryExitTime(today, fieldname);    // p is a pair of string activity (entry/exit) and long time
+            Date entext = new Date(p.second);
+            SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+            String entExtTime = timeformater.format(entext);
 
 
                 //firstLocation.getAccuracy();
@@ -359,15 +359,17 @@ public class Utils {
                     text = "Entry Time";
                     tinydb.putString("prevField" , fieldName);
                 }
-            if (fieldName != " not in field!! " && PREV_IN_FIELD == true){
+            else if (fieldName != " not in field!! " && PREV_IN_FIELD == true){
                 String prevField = tinydb.getString("prevField");
                 boolean transition = fieldName.equals(prevField);
                 if (transition == false){
-                    long exitTime =  prevMills;
+                    long exitTime =  mills;  //  !TODO should be mills, problem in setting exit time for field1 and entry for field 2 if transition
                     t = exitTime;
                     text = "Exit Time";
                     tinydb.putString("prevField" , fieldName );
                     tinydb.putBoolean("PREV_IN_FIELD", false);
+                    tinydb.putString("field_name", prevField);
+                    tinydb.putLong("exit_time", exitTime);
                 } else {
                     tinydb.putBoolean("PREV_IN_FIELD", true);
                     tinydb.putString("prevField" , fieldName );
@@ -378,7 +380,7 @@ public class Utils {
             }
 
 
-            if (fieldName == " not in field!! " && PREV_IN_FIELD == true){
+           else if (fieldName == " not in field!! " && PREV_IN_FIELD == true){
                 long exitTime =  (mills + prevMills)/2;
                 tinydb.putBoolean("PREV_IN_FIELD", false);
                 tinydb.putLong("exit_time", exitTime);
@@ -387,6 +389,7 @@ public class Utils {
                 tinydb.putString("prevField" , "");
 
            }
+
 
 
 
