@@ -363,7 +363,7 @@ public class Utils {
                 String prevField = tinydb.getString("prevField");
                 boolean transition = fieldName.equals(prevField);
                 if (transition == false){
-                    long exitTime =  mills;  //  !TODO should be mills, problem in setting exit time for field1 and entry for field 2 if transition
+                    long exitTime =  mills;
                     t = exitTime;
                     text = "Exit Time";
                     tinydb.putString("prevField" , fieldName );
@@ -389,11 +389,6 @@ public class Utils {
                 tinydb.putString("prevField" , "");
 
            }
-
-
-
-
-
 
 
             tinydb.putLong("prevtime", mills);
