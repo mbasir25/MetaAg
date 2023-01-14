@@ -26,7 +26,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         insert_operation.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), backg_gps.class)));
         view_data.setOnClickListener((View view) -> {
-            startActivity(new Intent(getApplicationContext(), operation.class));
+            startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
         });
 
 

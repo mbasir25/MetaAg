@@ -68,8 +68,8 @@ public class operation extends AppCompatActivity {
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
                             WorkedFieldObjMaker enterpair = descriptionList[0];
                             String entString = enterpair.getSecond();
-                            Date en = new Date(Long.valueOf(entString));
-                            String entry = formatter.format(en);
+                            Date en = new Date(Long.valueOf(entString)); // not used
+                            String entry = formatter.format(en);        //not used
 
                             operationNode.child(fieldname).child(entString).setValue(StoreData(descriptionList, fieldname));
 

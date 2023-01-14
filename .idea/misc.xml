@@ -6,6 +6,7 @@
         <entry key="..\:/androidproject/app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.24" />
         <entry key="..\:/androidproject/app/src/main/res/layout-v28/activity_main2.xml" value="0.36367753623188404" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_backg_gps.xml" value="0.1" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_collect_databy_field.xml" value="0.30104166666666665" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_drawpoly.xml" value="0.22" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_field_insert.xml" value="0.17604166666666668" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_get_gps.xml" value="0.16" />
@@ -15,7 +16,12 @@
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_operation.xml" value="0.25416666666666665" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_registration.xml" value="0.20984455958549222" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_showmap.xml" value="0.1" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/content_chat_ui.xml" value="0.36666666666666664" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/fragment_fieldlist.xml" value="0.24230072463768115" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/fragment_first2.xml" value="0.36666666666666664" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
         <entry key="..\:/androidproject/app/src/main/res/layout/home.xml" value="0.1" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/single_row_fieldlsit.xml" value="0.25" />
       </map>
     </option>
   </component>
