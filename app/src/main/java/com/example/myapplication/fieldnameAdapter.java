@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class fieldnameAdapter extends RecyclerView.Adapter<fieldnameAdapter.myvi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+    public void onBindViewHolder(@NonNull myviewholder holder, @SuppressLint("RecyclerView") int position) {
         holder.fieldname.setText(fieldnameholder.get(position).getFieldname());
         holder.entry.setText(fieldnameholder.get(position).getEntry());
         holder.exit.setText(fieldnameholder.get(position).getExit());

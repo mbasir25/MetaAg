@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -140,6 +141,9 @@ public class FieldlistFragment extends Fragment implements SelectListener{
             tinydb.putString("fieldname", field);
             tinydb.putString("entry", entry);
             tinydb.putString("exit", exit);
+
+            startActivity(new Intent(getContext(), data_wizard.class));
+
 
 
 

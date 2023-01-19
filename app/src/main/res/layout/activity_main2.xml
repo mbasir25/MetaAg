@@ -101,10 +101,10 @@
                     app:srcCompat="@drawable/ic_baseline_payments_24" />
 
                 <Button
-                    android:id="@+id/insert_cost"
+                    android:id="@+id/settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Cost data" />
+                    android:text="Settings" />
             </LinearLayout>
 
             <LinearLayout
