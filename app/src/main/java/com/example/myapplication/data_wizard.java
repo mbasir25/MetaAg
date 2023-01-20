@@ -26,7 +26,9 @@ public class data_wizard extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
     contentAdapter activityAdapter;
+    contentAdapter activityTypeAdapter;
     TinyDB tinydb;
+    String s;
 
 
     @Override
@@ -75,6 +77,7 @@ public class data_wizard extends AppCompatActivity {
         LinearLayout ten = findViewById(R.id.ten_l);
 
 
+        TextView typetext = findViewById(R.id.secquestion);
         TextView get_name = findViewById(R.id.get_name);
         TextView act = findViewById(R.id.act_name);
         TextView act_type = findViewById(R.id.act_type);
@@ -118,19 +121,33 @@ public class data_wizard extends AppCompatActivity {
 
                 act.setText(botRowModel.getContent());
                 sec.setVisibility(View.VISIBLE);
+                sec2.setVisibility(View.VISIBLE);
                 act.setVisibility(View.VISIBLE);
+                typetext.setText("What type of "+ botRowModel.getContent() + " you performed?");
                 rec_act_type.setVisibility(View.VISIBLE);
 
-                String s = botRowModel.getContent();
+                s = botRowModel.getContent();
 
-                DatabaseReference activity_type_ref = activity.child(s);
-                FirebaseRecyclerOptions<bot_row_model> types = setdata(activity_type_ref);
-                contentAdapter activityTypeAdapter =new contentAdapter(types);
+                DatabaseReference activity_type_ref = FirebaseDatabase.getInstance().getReference().child("Activities").child(s).child("type");
+//                FirebaseRecyclerOptions<bot_row_model> types = setdata(activity_type_ref);
+                FirebaseRecyclerOptions<bot_row_model> types =
+                        new FirebaseRecyclerOptions.Builder<bot_row_model>()
+                                .setQuery(activity_type_ref, bot_row_model.class)
+                                .build();
+
+                activityTypeAdapter =new contentAdapter(types);
+
                 rec_act_type.setAdapter(activityTypeAdapter);
+                activityTypeAdapter.startListening();
+
+
 
 
             }
+
         });
+
+
 
 
 
@@ -146,23 +163,26 @@ public class data_wizard extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         activityAdapter.startListening();
-
+//
     }
+
+
 
     @Override
     protected void onStop() {
         super.onStop();
         activityAdapter.stopListening();
+        activityTypeAdapter.stopListening();
     }
 
 
-    public FirebaseRecyclerOptions<bot_row_model> setdata(DatabaseReference ref) {
-        FirebaseRecyclerOptions<bot_row_model> options =
-        new FirebaseRecyclerOptions.Builder<bot_row_model>()
-                .setQuery(ref, bot_row_model.class)
-                .build();
-        return options;
-    }
+//    public FirebaseRecyclerOptions<bot_row_model> setdata(DatabaseReference ref) {
+//        FirebaseRecyclerOptions<bot_row_model> options =
+//        new FirebaseRecyclerOptions.Builder<bot_row_model>()
+//                .setQuery(ref, bot_row_model.class)
+//                .build();
+//        return options;
+//    }
 
 
 
