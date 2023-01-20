@@ -26,7 +26,7 @@ public class data_wizard extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
     contentAdapter activityAdapter;
-    contentAdapter activityTypeAdapter;
+    contentAdapter activityTypeAdapter, assetAdapter;
     TinyDB tinydb;
     String s;
 
@@ -139,6 +139,27 @@ public class data_wizard extends AppCompatActivity {
 
                 rec_act_type.setAdapter(activityTypeAdapter);
                 activityTypeAdapter.startListening();
+                activityTypeAdapter.setWhenClickListener(new contentAdapter.OnItemsClickListener() {
+                    @Override
+                    public void onItemClick(bot_row_model botRowModel) {
+                        third.setVisibility(View.VISIBLE);
+                        third2.setVisibility(View.VISIBLE);
+                        act_type.setVisibility(View.VISIBLE);
+                        act_type.setText(botRowModel.getContent());
+                        rec_asset.setVisibility(View.VISIBLE);
+                        DatabaseReference assets = FirebaseDatabase.getInstance().getReference().child("Assets");
+//                FirebaseRecyclerOptions<bot_row_model> types = setdata(activity_type_ref);
+                        FirebaseRecyclerOptions<bot_row_model> asset =
+                                new FirebaseRecyclerOptions.Builder<bot_row_model>()
+                                        .setQuery(assets, bot_row_model.class)
+                                        .build();
+
+                        assetAdapter =new contentAdapter(asset);
+                        rec_asset.setAdapter(assetAdapter);
+                        assetAdapter.startListening();
+
+                    }
+                });
 
 
 
