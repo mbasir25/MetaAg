@@ -41,7 +41,8 @@
                 android:id="@+id/linlayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity ="bottom" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,10 +78,13 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text="TextView_replace_answer"
                         android:visibility="gone"/>
 
                 </LinearLayout>
+
+
+
 
                 // 2nd question
 
@@ -123,7 +127,96 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
+                //crop question
+
+                <LinearLayout
+                    android:id = "@+id/crop_l"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id = "@+id/crop2_l"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/chatborder"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/cropquestion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Which crop did you sow/plant ? " />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id = "@+id/rec_crops"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/crop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/chatborder"
+                        android:padding="3dp"
+                        android:text=""
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
+
+                //croprate question
+                <LinearLayout
+                    android:id = "@+id/croprate_l"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id = "@+id/croprate2_l"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/chatborder"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/cropratequestion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="what was the seedrate/plant density?" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/croprate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/chatborder"
+                        android:padding="3dp"
+                        android:text=""
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -171,7 +264,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -217,7 +310,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -256,7 +349,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -301,7 +394,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -346,13 +439,57 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"  />
 
                 </LinearLayout>
 
-                //8th question
+                //materal specification question
 
+                <LinearLayout
+                    android:id = "@+id/material_sp_l"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id = "@+id/material_sp2_l"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/chatborder"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/material_SPquestion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="How much material did you use? " />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id = "@+id/rec_material_sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/material_sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/chatborder"
+                        android:padding="3dp"
+                        android:text=""
+                        android:visibility="gone"  />
+
+                </LinearLayout>
+                // 8th question
                 <LinearLayout
                     android:id = "@+id/eig_l"
                     android:layout_width="match_parent"
@@ -387,7 +524,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"  />
 
                 </LinearLayout>
@@ -413,7 +550,7 @@
                             android:id="@+id/ninthquestion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="What's the amount of your work? " />
+                            android:text="Do you want to keep any other note?" />
 
 
                     </LinearLayout>
@@ -427,7 +564,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/chatborder"
                         android:padding="3dp"
-                        android:text="TextView_replace _answer"
+                        android:text=""
                         android:visibility="gone"/>
 
                 </LinearLayout>
@@ -450,7 +587,7 @@
                             android:id="@+id/tenthquestion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Do you have another activity? " />
+                            android:text="Do you have another activity in this field? " />
 
 
                     </LinearLayout>

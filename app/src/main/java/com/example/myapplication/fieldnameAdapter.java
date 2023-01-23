@@ -39,6 +39,7 @@ public class fieldnameAdapter extends RecyclerView.Adapter<fieldnameAdapter.myvi
             @Override
             public void onClick(View v) {
                 listener.onItemClicked(fieldnameholder.get(position));
+//                holder.cardView.setCardBackgroundColor(Integer.parseInt("#E56717"));
             }
         });
 
