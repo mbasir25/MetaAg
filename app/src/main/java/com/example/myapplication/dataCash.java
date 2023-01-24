@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,8 @@ import com.google.gson.Gson;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class dataCash extends AppCompatActivity {
 
@@ -32,7 +36,8 @@ public class dataCash extends AppCompatActivity {
     TinyDB tinydb;
     Gson gson;
 
-    ArrayList<String> activities;
+
+    ArrayList<String> fields;
     ArrayList<String> act_types;
     ArrayList<String> act_and_type;
 
@@ -49,72 +54,39 @@ public class dataCash extends AppCompatActivity {
         ListView showdata = findViewById(R.id.showdata);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference();
-        activities = new ArrayList<String>();
+        mDatabaseReference = mFirebaseDatabase.getReference("Operation");
+        fields = new ArrayList<String>();
+
+
         act_types = new ArrayList<String>();
         act_and_type = new ArrayList<String>();
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,activities);
-        initializeListView(adapter);
-
         cashchat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showdata.setAdapter(adapter);
-            }
-        });
 
 
-
-
-
-
-    }
-
-    private void initializeListView(ArrayAdapter<String> adapter) {
-
-        gson = new Gson();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference();
-        // below line is used for getting reference
-        // of our Firebase Database.
-
-
-        // in below line we are calling method for add child event
-        // listener to get the child of our database.
-        mDatabaseReference.child("activities").addChildEventListener(new ChildEventListener() {
+        mDatabaseReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                for (DataSnapshot act : snapshot.getChildren()){
-                    String act_name = act.getKey();
-                    activities.add(act_name);
-
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()){
+                    if (task.getResult().exists()){
+                        Toast.makeText(dataCash.this, "Read data Successfully!", Toast.LENGTH_SHORT).show();
+                        for (DataSnapshot name : task.getResult().getChildren()){
+                            String fname = name.getKey();
+                            fields.add(fname);
+                        }
+                        ArrayAdapter<String> fieledAdapter = new ArrayAdapter<String>(getApplicationContext(), com.karumi.dexter.R.layout.support_simple_spinner_dropdown_item, fields);
+                        showdata.setAdapter(fieledAdapter);
+                    }
+                }else{
+                    Toast.makeText(dataCash.this, "Sorry bro!!!", Toast.LENGTH_SHORT).show();
                 }
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                adapter.notifyDataSetChanged();
-                activities.remove(snapshot.getKey());
-                adapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        });
 
             }
         });
+
 
 
     }
