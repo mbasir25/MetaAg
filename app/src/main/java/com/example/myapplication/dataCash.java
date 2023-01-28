@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -77,6 +78,16 @@ public class dataCash extends AppCompatActivity {
                         }
                         ArrayAdapter<String> fieledAdapter = new ArrayAdapter<String>(getApplicationContext(), com.karumi.dexter.R.layout.support_simple_spinner_dropdown_item, fields);
                         showdata.setAdapter(fieledAdapter);
+                        showdata.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                String name = fieledAdapter.getItem(position);
+                                Intent intent = new Intent(dataCash.this, ViewopbyDate.class);
+                                intent.putExtra("fNAME", name);
+                                startActivity(intent);
+
+                            }
+                        });
                     }
                 }else{
                     Toast.makeText(dataCash.this, "Sorry bro!!!", Toast.LENGTH_SHORT).show();

@@ -245,7 +245,7 @@
                             android:id="@+id/thirdquestion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="What asset did you use? " />
+                            android:text="Which power unit did you use? " />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id = "@+id/rec_asset"
