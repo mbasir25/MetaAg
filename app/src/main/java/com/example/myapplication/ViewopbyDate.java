@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +62,20 @@ public class ViewopbyDate extends AppCompatActivity {
                         }
                         ArrayAdapter<String> timesAdapter = new ArrayAdapter<String>(getApplicationContext(), com.karumi.dexter.R.layout.support_simple_spinner_dropdown_item, times);
                         timeslist.setAdapter(timesAdapter);
+
+                        timeslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                String stime = timesAdapter.getItem(position);
+                                String ltime = longtime(stime);
+                                String fldname = fname;
+                                Intent intent = new Intent(ViewopbyDate.this, OpdataShowforTime.class);
+                                intent.putExtra("lTIME", ltime);
+                                intent.putExtra("fNAME", fldname);
+                                startActivity(intent);
+                            }
+                        });
+
                         }
                 }else{
                     Toast.makeText(ViewopbyDate.this, "Sorry bro!!!", Toast.LENGTH_SHORT).show();
@@ -78,5 +93,21 @@ public class ViewopbyDate extends AppCompatActivity {
         String s = f.format(d);
 
         return s;
+    }
+
+    public String longtime (String stime){
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long timelong = 0;
+        try {
+
+            Date d = f.parse(stime);
+            timelong = d.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return String.valueOf(timelong);
+
+
     }
 }

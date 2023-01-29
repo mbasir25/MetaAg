@@ -3,6 +3,10 @@ package com.example.myapplication;
 public class OpDataBind {
         String Operator, Entry,Exit,Duration,Activity,Crop, Croprate, Activity_type,Asset_used, Asset_description, Asset_note, Implement, Material, Material_type, Material_amount, Work_amount;
 
+    OpDataBind(){
+
+    }
+
     public OpDataBind(String operator, String entry, String exit, String duration, String activity, String crop, String croprate, String activity_type, String asset_used, String asset_description, String asset_note, String implement, String material, String material_type, String material_amount, String work_amount) {
         Operator = operator;
         Entry = entry;

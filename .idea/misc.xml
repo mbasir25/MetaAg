@@ -16,6 +16,7 @@
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_insert_data.xml" value="0.2359375" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_main2.xml" value="0.25" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/activity_opdata_showfor_time.xml" value="0.1" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_operation.xml" value="0.25416666666666665" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_registration.xml" value="0.20984455958549222" />
         <entry key="..\:/androidproject/app/src/main/res/layout/activity_showmap.xml" value="0.1" />
@@ -26,6 +27,7 @@
         <entry key="..\:/androidproject/app/src/main/res/layout/fragment_first2.xml" value="0.36666666666666664" />
         <entry key="..\:/androidproject/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
         <entry key="..\:/androidproject/app/src/main/res/layout/home.xml" value="0.1" />
+        <entry key="..\:/androidproject/app/src/main/res/layout/op_row_toshow.xml" value="0.31926121372031663" />
         <entry key="..\:/androidproject/app/src/main/res/layout/single_row_fieldlsit.xml" value="0.25" />
       </map>
     </option>

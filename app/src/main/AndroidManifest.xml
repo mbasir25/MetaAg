@@ -23,6 +23,9 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".OpdataShowforTime"
+            android:exported="false" />
+        <activity
             android:name=".ViewopbyDate"
             android:exported="false" />
         <activity
