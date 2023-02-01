@@ -33,12 +33,9 @@
             android:exported="false" />
         <activity
             android:name=".data_wizard"
-            android:exported="false" />
-        <activity
-            android:name=".ChatUI"
             android:exported="false"
-            android:label="@string/title_activity_chat_ui"
-            android:theme="@style/Theme.MyApplication.NoActionBar" />
+            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".CollectDatabyField"
             android:exported="false" />

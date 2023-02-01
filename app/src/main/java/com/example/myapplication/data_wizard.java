@@ -305,6 +305,8 @@ public class data_wizard extends AppCompatActivity {
                                                                                                     savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                                                                             material, material_SP, mat_amount, work_amount);
 
+                                                                                                    removedata(fieldname, en);
+
 
                                                                                                     startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
                                                                                                 }
@@ -366,6 +368,8 @@ public class data_wizard extends AppCompatActivity {
                                                                                                                             savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                                                                                                     material, material_SP, mat_amount, work_amount);
 
+                                                                                                                            removedata(fieldname, en);
+
 
                                                                                                                             startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
                                                                                                                         }
@@ -424,6 +428,8 @@ public class data_wizard extends AppCompatActivity {
                                         public void onClick(View v) {
                                             savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                     material, material_SP, mat_amount, work_amount);
+
+                                            removedata(fieldname, en);
 
 
                                             startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
@@ -502,6 +508,8 @@ public class data_wizard extends AppCompatActivity {
                                                             public void onClick(View v) {
                                                                 savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                                         material, material_SP, mat_amount, work_amount);
+
+                                                                removedata(fieldname, en);
 
 
                                                                 startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
@@ -582,6 +590,8 @@ public class data_wizard extends AppCompatActivity {
                                                                                         savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                                                                 material, material_SP, mat_amount, work_amount);
 
+                                                                                        removedata(fieldname, en);
+
 
                                                                                         startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
                                                                                     }
@@ -642,6 +652,8 @@ public class data_wizard extends AppCompatActivity {
                                                                                                             public void onClick(View v) {
                                                                                                                 savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                                                                                         material, material_SP, mat_amount, work_amount);
+
+                                                                                                                removedata(fieldname, en);
 
 
                                                                                                                 startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
@@ -765,6 +777,44 @@ public class data_wizard extends AppCompatActivity {
             e.printStackTrace();
         }
         return timelong;
+    }
+
+    public void removedata(String fname, String ent){
+        tinydb = new TinyDB(getApplicationContext());
+
+        Map<String, ?> Entries = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getAll();
+        for (Map.Entry<String, ?> get_Entry : Entries.entrySet()) {
+//
+            if ("workedFields".equals(get_Entry.getKey())) {
+                ArrayList<String> fieldDetails = tinydb.getListString("workedFields");
+                gson = new Gson();
+                ArrayList<String> fieldsNames = new ArrayList<>();
+                for (String workedField : fieldDetails) {
+
+                    Type listType = new TypeToken<List<String>>() {
+                    }.getType();
+
+                    List<String> fieldList = gson.fromJson(workedField, listType);
+
+                    String fieldname = fieldList.get(0);
+                    String description = fieldList.get(1);
+                    WorkedFieldObjMaker[] descriptionList = gson.fromJson(description, WorkedFieldObjMaker[].class);
+
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+                    WorkedFieldObjMaker enterpair = descriptionList[0];
+                    String entString = enterpair.getSecond();
+                    Date en = new Date(Long.valueOf(entString)); // not used
+                    String entry = formatter.format(en);
+                    if (fieldname.equals(fname) && entry.equals(ent)){
+                        fieldDetails.remove(workedField);
+
+                        tinydb.putListString("workedFields",fieldDetails);
+                        break;
+
+                    }
+                }
+            }
+        }
     }
 
 
