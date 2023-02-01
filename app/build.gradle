@@ -60,6 +60,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation group: 'com.opencsv', name: 'opencsv', version: '4.1'
 
 
 
