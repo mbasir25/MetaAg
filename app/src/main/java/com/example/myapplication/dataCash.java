@@ -25,7 +25,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class dataCash extends AppCompatActivity {
 
@@ -60,6 +64,8 @@ public class dataCash extends AppCompatActivity {
         fields = new ArrayList<String>();
 
         ArrayList<String[]> dataList = new ArrayList<>();
+
+
 
 
 
@@ -101,43 +107,47 @@ public class dataCash extends AppCompatActivity {
                             }
                         });
 
-                        for (DataSnapshot fnames: task.getResult().getChildren()){
-                            String fieldn = fnames.getKey();
+                        for (DataSnapshot fnames : task.getResult().getChildren()) {
 
-                            for (DataSnapshot en : fnames.getChildren()){
-                                for (DataSnapshot ac : en.getChildren()){
+                            String fieldn = fnames.getKey();
+                            for (DataSnapshot en : fnames.getChildren()) {
+                                for (DataSnapshot ac : en.getChildren()) {
                                     OpDataBind data = ac.getValue(OpDataBind.class);
 //                                    !TODO Write here
 
 
-                                    String actName  = data.getActivity();
-                                    String actType  = data.getActivity_type();
-                                    String cropName  = data.getCrop();
-                                    String cropRate  = data.getCroprate();
-                                    String pUnit  = data.getAsset_used();
-                                    String pUnitDEsc  = data.getAsset_description();
-                                    String pNote  = data.getAsset_note();
-                                    String implementName  = data.getImplement();
-                                    String materialName  = data.getMaterial();
-                                    String  matType  = data.getMaterial_type();
-                                    String  matAmount  = data.getMaterial_amount();
-                                    String workNote  = data.getWork_amount();
-                                    String operator  = data.getOperator();
-                                    String entryTime  = data.getEntry();
-                                    String opTime  = data.getDuration();
-                                    String exitTime  = data.getExit();
+                                    String actName = data.getActivity();
+                                    String actType = data.getActivity_type();
+                                    String cropName = data.getCrop();
+                                    String cropRate = data.getCroprate();
+                                    String pUnit = data.getAsset_used();
+                                    String pUnitDEsc = data.getAsset_description();
+                                    String pNote = data.getAsset_note();
+                                    String implementName = data.getImplement();
+                                    String materialName = data.getMaterial();
+                                    String matType = data.getMaterial_type();
+                                    String matAmount = data.getMaterial_amount();
+                                    String workNote = data.getWork_amount();
+                                    String operator = data.getOperator();
+                                    String entryTime = data.getEntry();
+                                    String opTime = data.getDuration();
+                                    String exitTime = data.getExit();
 
-                                    String [] dataArray = {fieldn, operator, entryTime,opTime,exitTime, actName,actType,cropName,cropRate,pUnit,pUnitDEsc,pNote,implementName,materialName,matType,matAmount,workNote};
+                                    String[] dataArray = {fieldn, operator, entryTime, opTime, exitTime, actName, actType, cropName, cropRate, pUnit, pUnitDEsc, pNote, implementName, materialName, matType, matAmount, workNote};
                                     dataList.add(dataArray);
                                 }
-
-
                             }
                         }
+
                         download.setOnClickListener(new View.OnClickListener() {
+
+
+
                             @Override
                             public void onClick(View v) {
-                                fileName = "Filed_Activity_Data.csv";
+                                String currentDate = new SimpleDateFormat("dd_MM_yyyy", Locale.getDefault()).format(new Date());
+                                String currentTime = new SimpleDateFormat("HH_mm_ss", Locale.getDefault()).format(new Date());
+                                fileName = currentDate +"_"+currentTime+"_act_data.csv";
                                 File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath(), fileName);
                                 try {
 
@@ -146,6 +156,7 @@ public class dataCash extends AppCompatActivity {
 
                                     String[] headers = {"Field_Name", "Operator", "Entry_Time", "Duration", "Exit_Time", "Activity_Name", "Activity_Type", "Crop_Name", "Crop_Rate", "Power_Unit", "Power_Unit_description", "Note_Power_unit", "Implement_Name", "Material_Used", "Material_Type", "Material_Amount", "Extra_Note"};
                                     csvWriter.writeNext(headers);
+
                                     for (String[] dataarray : dataList) {
                                         csvWriter.writeNext(dataarray);
 
@@ -160,6 +171,7 @@ public class dataCash extends AppCompatActivity {
                                 }
                             }
                         });
+
                     }
 
                 } else {
@@ -169,5 +181,9 @@ public class dataCash extends AppCompatActivity {
 
 
         });
+
+
+
     }
+
 }
