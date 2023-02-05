@@ -22,11 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class registration extends AppCompatActivity {
-    EditText name_input, sign_password, email_input, pass_login, email_login, phone_input;
+    EditText name_input, sign_password, email_input, phone_input;
     Button signup, button_login;
     boolean valid= true;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+
+    TinyDB tinyDB;
 
 
     @Override
@@ -38,15 +40,24 @@ public class registration extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
+        tinyDB = new TinyDB(getApplicationContext());
+
 
         name_input = findViewById(R.id.name_input);
         sign_password = findViewById(R.id.sign_password);
         email_input = findViewById(R.id.email_input);
-        pass_login = findViewById(R.id.pass_login);
-        email_login = findViewById(R.id.email_loin);
+
         phone_input = findViewById(R.id.phone_input);
         signup = findViewById(R.id.signup);
         button_login = findViewById(R.id.button_login);
+
+        button_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), UserLogin.class));
+            }
+        });
+
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +81,10 @@ public class registration extends AppCompatActivity {
                             userInfo.put("Phone", phone_input.getText().toString());
 
                             df.set(userInfo);
+
+                            String name = name_input.getText().toString();
+
+//                            tinyDB.putString("UName", name );
 
 
                             startActivity(new Intent(getApplicationContext(),MainActivity2.class));

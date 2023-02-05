@@ -32,56 +32,33 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="333dp"
-            android:layout_height="59dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/name5"
-                android:layout_width="122dp"
-                android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:text="Email"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/email_loin"
-                android:layout_width="238dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp"
-                android:visibility="visible"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="330dp"
-            android:layout_height="53dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/name4"
-                android:layout_width="122dp"
-                android:layout_height="32dp"
-                android:elegantTextHeight="true"
-                android:text="Password"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/pass_login"
-                android:layout_width="240dp"
-                android:layout_height="48dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="textPassword"
-                tools:ignore="SpeakableTextPresentCheck" />
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Already have account??"
+                    android:textSize = "20dp"/>
+
+                <Button
+                    android:id="@+id/button_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#A8A7A7"
+                    android:text="Login"
+                    android:textColor="#263238"
+                    app:backgroundTint="#4FC3C1C1" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -92,12 +69,6 @@
             android:orientation="vertical"
             android:paddingLeft="100dp"
             android:paddingRight="100dp">
-
-            <Button
-                android:id="@+id/button_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -228,34 +199,12 @@
         android:background="#348ACF"
         android:text="Sign Up"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="#0C0C0C"
         android:textSize="24dp"
+        app:backgroundTint="#684FA7ED"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" /><![CDATA[
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    tools:layout_editor_absoluteX="36dp"
-    tools:layout_editor_absoluteY="253dp" />
-
-
-
-
-
-
-]]>
 </androidx.constraintlayout.widget.ConstraintLayout>

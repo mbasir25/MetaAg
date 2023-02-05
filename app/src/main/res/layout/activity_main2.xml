@@ -75,7 +75,7 @@
                     android:id="@+id/insert_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Insert Field" />
+                    android:text="Draw Fields" />
 
             </LinearLayout>
         </LinearLayout>
@@ -122,7 +122,7 @@
                     android:id="@+id/insert_sale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sale data" />
+                    android:text="Activity setup" />
 
             </LinearLayout>
         </LinearLayout>
@@ -151,7 +151,7 @@
                     android:id="@+id/insert_operation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Operation" />
+                    android:text="Auto -record" />
             </LinearLayout>
 
             <LinearLayout
@@ -169,7 +169,7 @@
                     android:id="@+id/view_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="View data" />
+                    android:text="Data wizard" />
 
             </LinearLayout>
         </LinearLayout>
