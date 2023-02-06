@@ -2,18 +2,25 @@ package com.example.myapplication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -22,6 +29,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
@@ -39,17 +48,22 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
     SupportMapFragment supportMapFragment;
     GoogleMap gMap;
     Button save_map, clear_map;
+    FloatingActionButton fshowpoly;
     CheckBox checkBox;
     EditText field_name;
     Button draw_map;
-    boolean valid= true;
+    boolean valid = true;
     TinyDB tinydb;
     Polygon polygon = null;
+    Polygon polyg = null;
+    ArrayList<Polygon> polyglist;
     List<LatLng> latLngList = new ArrayList<>();
     List<Marker> markerList = new ArrayList<>();
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
-//
+
+    //
     Gson objGson = new GsonBuilder().setPrettyPrinting().create();
 
     @Override
@@ -58,40 +72,36 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_drawpoly);
 
 
-
-
-
 ////
-        supportMapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(this);
         checkBox = findViewById(R.id.checkBox);
         save_map = findViewById(R.id.save_field);
         clear_map = findViewById(R.id.clear_map);
-        draw_map= findViewById(R.id.draw_map);
+        draw_map = findViewById(R.id.draw_map);
         field_name = findViewById(R.id.field_name);
+        fshowpoly= findViewById(R.id.fshowpoly);
 
         tinydb = new TinyDB(getApplicationContext());
-
 
 
         checkBox.setOnCheckedChangeListener((compoundButton, ticked) -> {
             if (polygon == null) return;
 
             if (ticked) {
-               polygon.setFillColor(Color.BLUE);
-           } else {
-               polygon.setFillColor(Color.TRANSPARENT);
-           }
+                polygon.setFillColor(Color.BLUE);
+            } else {
+                polygon.setFillColor(Color.TRANSPARENT);
+            }
 
         });
 
 
-
         draw_map.setOnClickListener(view -> {
-          if (polygon != null) {
-              polygon.remove();
-          }
-            if (latLngList.size()>0) {
+            if (polygon != null) {
+                polygon.remove();
+            }
+            if (latLngList.size() > 0) {
                 PolygonOptions polygonOptions = new PolygonOptions().addAll(latLngList)
                         .clickable(true);
 
@@ -108,13 +118,19 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
         });
 
 
-
         clear_map.setOnClickListener(view -> {
             if (polygon != null) {
                 polygon.remove();
+
+            }
+            if (polyglist.size()>0){
+                for (Polygon polig : polyglist){
+                    polig.remove();
+                }
             }
             for (Marker marker : markerList) marker.remove();
             latLngList.clear();
+
             checkBox.setChecked(false);
 
         });
@@ -122,46 +138,41 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
         save_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkField (field_name);
+                checkField(field_name);
                 if (valid & polygon != null) {
 
-                        String name = field_name.getText().toString();
+                    String name = field_name.getText().toString();
 
-                        filed_holder poly = new filed_holder(polygon);
-                        FirebaseDatabase field = FirebaseDatabase.getInstance();
-                        DatabaseReference node = field.getReference("Field");
+                    filed_holder poly = new filed_holder(polygon);
+                    FirebaseDatabase field = FirebaseDatabase.getInstance();
+                    DatabaseReference node = field.getReference("Field");
 
-                        node.child(name).setValue(poly);
-
-
+                    node.child(name).setValue(poly);
 
 
-
-                        Context context = getApplicationContext();
-                        TinyDB tinydb = new TinyDB(context);
-                        // TODO: Find a more efficient way to fetch the old record.
+                    Context context = getApplicationContext();
+                    TinyDB tinydb = new TinyDB(context);
+                    // TODO: Find a more efficient way to fetch the old record.
                     // TODO: Search if the shared preference storage clear after app killed?
 // CRUD operation room database, check internet connectivity in android
-                        Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(context).getAll();
-                        boolean fieldStored = false;
-                        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-                            Log.d("map values", entry.getKey());
-                            if ("cashedpolygons".equals(entry.getKey())) {
+                    Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(context).getAll();
+                    boolean fieldStored = false;
+                    for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                        Log.d("map values", entry.getKey());
+                        if ("cashedpolygons".equals(entry.getKey())) {
 //                              using tinydb for accessing sharedpreference
 
-                                ArrayList<String> fieldlist =  tinydb.getListString("cashedpolygons");
+                            ArrayList<String> fieldlist = tinydb.getListString("cashedpolygons");
 //                                ArrayList<List<String>> newList = new ArrayList<>();
-                                List<String> newfield = listOfField(name, latLngList);
-                                String newf = objGson.toJson(newfield);
-                                fieldlist.add(newf);
+                            List<String> newfield = listOfField(name, latLngList);
+                            String newf = objGson.toJson(newfield);
+                            fieldlist.add(newf);
 //                                String newWholeList = objGson.toJson(fieldlist);
 //                                fieldlist.add(newWholeList);
-                                tinydb.putListString("cashedpolygons", fieldlist);
-                                fieldStored = true;
+                            tinydb.putListString("cashedpolygons", fieldlist);
+                            fieldStored = true;
 
-                                break;
-
-
+                            break;
 
 
 //                                List<String> listedField = listOfField(name, latLngList);
@@ -186,10 +197,10 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 //                                }
 
 ///
-                            }
                         }
+                    }
 
-                        if (fieldStored == false) {
+                    if (fieldStored == false) {
                         ArrayList<String> newfieldList = new ArrayList<>();
 //                        ArrayList<List<String>> newList = new ArrayList<>();
                         List<String> newfield = listOfField(name, latLngList);
@@ -199,23 +210,71 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 //                        String newWholeList = objGson.toJson(newList);
 //                        newfieldList.add(newWholeList);
                         tinydb.putListString("cashedpolygons", newfieldList);
-                        }
+                    }
 
 
+                    polygon.remove();
+                    field_name.setText("");
+                    Toast.makeText(drawpoly.this, "Successfully inserted", Toast.LENGTH_SHORT).show();
 
 
-
-
-                        polygon.remove();
-                        field_name.setText("");
-                        Toast.makeText(drawpoly.this, "Successfully inserted", Toast.LENGTH_SHORT).show();
-
-
-                }
-                else {
+                } else {
                     Toast.makeText(drawpoly.this, "Insertion Failed", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+
+        fshowpoly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String, ?> allEntries = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getAll();
+
+                polyglist = new ArrayList<>();
+
+                for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                    Log.d("map values", entry.getKey());
+                    if ("cashedpolygons".equals(entry.getKey())) {
+//                              using tinydb for accessing sharedpreference
+
+                        ArrayList<String> fieldlist = tinydb.getListString("cashedpolygons");
+                        Gson gson = new Gson();
+
+                        String c = new String();
+
+                        for (String field : fieldlist){
+
+                            Type listType = new TypeToken<List<String>>(){}.getType();
+
+                            List<String> list = gson.fromJson(field,listType);
+
+                            String name = list.get(0);
+                            String latlng = list.get(1);
+                            ModelFieldObjectCreator[] latLngObj = gson.fromJson(latlng, ModelFieldObjectCreator[].class);
+
+                            List<LatLng> polyPoints = new ArrayList<>();
+                            for (ModelFieldObjectCreator s : latLngObj) {
+                                Double lat = s.getLatitude();
+                                Double lng = s.getLongitude();
+                                LatLng point = new LatLng(lat,lng);
+                                polyPoints.add(point);
+
+                            }
+                            if (polyPoints.size() > 0) {
+                                PolygonOptions polygonOps = new PolygonOptions().addAll(polyPoints)
+                                        .clickable(true);
+
+                                polyg = gMap.addPolygon(polygonOps);
+                                //color
+                                polyg.setStrokeColor(Color.BLUE);
+                                polyg.setStrokeWidth(5);
+                                polyglist.add(polyg);
+                            }
+
+                        }
+                    }
+                }
             }
         });
 
@@ -223,11 +282,13 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
     }
 
 
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+
+        LatLng l = new LatLng(40.430486, -86.917207);
         gMap = googleMap;
         gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(l, 10));
         gMap.setOnMapClickListener(latLng -> {
             MarkerOptions markerOptions = new MarkerOptions().position(latLng);
             Marker marker = gMap.addMarker(markerOptions);
@@ -237,18 +298,19 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
         });
 
     }
+
     public boolean checkField(EditText textField) {
-        if (textField.getText().toString().isEmpty()){
+        if (textField.getText().toString().isEmpty()) {
             textField.setError("Error");
             valid = false;
-        }
-        else {
+        } else {
             valid = true;
 
         }
         return valid;
     }
-    public List<String> listOfField (String name, List latLngList){
+
+    public List<String> listOfField(String name, List latLngList) {
         String jsonLatLng = objGson.toJson(latLngList);
         ArrayList<String> field = new ArrayList<>();
         field.add(name);
@@ -256,5 +318,7 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
 //
         return field;
     }
+
+
 
 }
