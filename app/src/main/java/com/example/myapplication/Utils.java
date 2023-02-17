@@ -173,7 +173,7 @@ public class Utils {
                     NotificationManager nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                     Notification notification;
 
-                    PendingIntent contentIntent = PendingIntent.getActivity(context, REQ_CODE, new Intent(context, operation.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent contentIntent = PendingIntent.getActivity(context, REQ_CODE, new Intent(context, CollectDatabyField.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
 //                    Intent iNotify = new Intent(context, operation.class);
 //

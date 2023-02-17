@@ -291,33 +291,43 @@ public class data_wizard extends AppCompatActivity {
                                                                                     public void onItemClick(bot_row_model botRowModel) {
                                                                                         material.setVisibility(View.VISIBLE);
                                                                                         material.setText(botRowModel.getContent());
-                                                                                        String matsp = botRowModel.getContent();
-                                                                                        if (matsp.equals("No material used")){
-                                                                                            String inp3 = String.valueOf(textinput.getText());
-                                                                                            work_amount.setVisibility(View.VISIBLE);
-                                                                                            work_amount.setText(inp3);
+//                                                                                        String matsp = botRowModel.getContent();
 
-                                                                                            ten.setVisibility(View.VISIBLE);
+                                                                                        if (String.valueOf(material.getText()).equals("Nothing")){
 
-                                                                                            no.setOnClickListener(new View.OnClickListener() {
+                                                                                            nin.setVisibility(View.VISIBLE);
+                                                                                            nin2.setVisibility(View.VISIBLE);
+                                                                                            input.setOnClickListener(new View.OnClickListener() {
                                                                                                 @Override
                                                                                                 public void onClick(View v) {
-                                                                                                    savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
-                                                                                                            material, material_SP, mat_amount, work_amount);
 
-                                                                                                    removedata(fieldname, en);
+                                                                                                    work_amount.setVisibility(View.VISIBLE);
+                                                                                                    String inp3 = String.valueOf(textinput.getText());
+                                                                                                    work_amount.setText(inp3);
+
+                                                                                                    ten.setVisibility(View.VISIBLE);
+
+                                                                                                    no.setOnClickListener(new View.OnClickListener() {
+                                                                                                        @Override
+                                                                                                        public void onClick(View v) {
+                                                                                                            savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
+                                                                                                                    material, material_SP, mat_amount, work_amount);
+
+                                                                                                            removedata(fieldname, en);
 
 
-                                                                                                    startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
-                                                                                                }
-                                                                                            });
-                                                                                            yes.setOnClickListener(new View.OnClickListener() {
-                                                                                                @Override
-                                                                                                public void onClick(View v) {
-                                                                                                    savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
-                                                                                                            material, material_SP, mat_amount, work_amount);
-                                                                                                    recreate();
+                                                                                                            startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
+                                                                                                        }
+                                                                                                    });
+                                                                                                    yes.setOnClickListener(new View.OnClickListener() {
+                                                                                                        @Override
+                                                                                                        public void onClick(View v) {
+                                                                                                            savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
+                                                                                                                    material, material_SP, mat_amount, work_amount);
+                                                                                                            recreate();
 
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
                                                                                             });
 
@@ -328,7 +338,7 @@ public class data_wizard extends AppCompatActivity {
 
                                                                                             DatabaseReference refs = FirebaseDatabase.getInstance().getReference();
 
-                                                                                            DatabaseReference materials_SP_ref = refs.child("Materials").child(matsp).child("specify");
+                                                                                            DatabaseReference materials_SP_ref = refs.child("Materials").child(String.valueOf(material.getText())).child("specify");
 
                                                                                             FirebaseRecyclerOptions<bot_row_model> mats_SP =
                                                                                                     new FirebaseRecyclerOptions.Builder<bot_row_model>()
@@ -577,26 +587,35 @@ public class data_wizard extends AppCompatActivity {
                                                                             material.setText(botRowModel.getContent());
 
                                                                             String matsp = botRowModel.getContent();
-                                                                            if (matsp.equals("No material used")) {
-                                                                                String inp3 = String.valueOf(textinput.getText());
-                                                                                work_amount.setVisibility(View.VISIBLE);
-                                                                                work_amount.setText(inp3);
+                                                                            if (String.valueOf(material.getText()).equals("Nothing")){
 
-                                                                                ten.setVisibility(View.VISIBLE);
-
-                                                                                no.setOnClickListener(new View.OnClickListener() {
+                                                                                nin.setVisibility(View.VISIBLE);
+                                                                                nin2.setVisibility(View.VISIBLE);
+                                                                                input.setOnClickListener(new View.OnClickListener() {
                                                                                     @Override
                                                                                     public void onClick(View v) {
-                                                                                        savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
+
+                                                                                        work_amount.setVisibility(View.VISIBLE);
+                                                                                        String inp3 = String.valueOf(textinput.getText());
+                                                                                        work_amount.setText(inp3);
+
+
+
+                                                                                        ten.setVisibility(View.VISIBLE);
+
+                                                                                         no.setOnClickListener(new View.OnClickListener() {
+                                                                                            @Override
+                                                                                            public void onClick(View v) {
+                                                                                                savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
                                                                                                 material, material_SP, mat_amount, work_amount);
 
-                                                                                        removedata(fieldname, en);
+                                                                                                removedata(fieldname, en);
 
 
-                                                                                        startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
-                                                                                    }
-                                                                                });
-                                                                                yes.setOnClickListener(new View.OnClickListener() {
+                                                                                                startActivity(new Intent(getApplicationContext(), CollectDatabyField.class));
+                                                                                            }
+                                                                                         });
+                                                                                    yes.setOnClickListener(new View.OnClickListener() {
                                                                                     @Override
                                                                                     public void onClick(View v) {
                                                                                         savedata(fieldname, en, ex, act, cropt, cropr, act_type, asset_use, asset_desc, asset_note, implement,
@@ -605,6 +624,8 @@ public class data_wizard extends AppCompatActivity {
 
                                                                                     }
                                                                                 });
+                                                                                }
+                                                                            });
 
                                                                             } else {
                                                                                 mat_sp.setVisibility(View.VISIBLE);
@@ -714,12 +735,12 @@ public class data_wizard extends AppCompatActivity {
 
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        activityAdapter.stopListening();
-        activityTypeAdapter.stopListening();
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        activityAdapter.stopListening();
+//        activityTypeAdapter.stopListening();
+//    }
 
 
     public void savedata(String fieldname, String en, String ex, TextView act, TextView cropt, TextView cropr, TextView act_type, TextView asset_use, TextView asset_desc, TextView asset_note, TextView implement,

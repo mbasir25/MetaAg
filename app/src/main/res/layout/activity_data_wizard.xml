@@ -466,7 +466,7 @@
                             android:id="@+id/material_SPquestion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="How much material did you use? " />
+                            android:text="which type of material did you use? " />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id = "@+id/rec_material_sp"

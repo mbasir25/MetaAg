@@ -104,7 +104,7 @@
                     android:id="@+id/settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Settings" />
+                    android:text="Get/set data" />
             </LinearLayout>
 
             <LinearLayout
@@ -122,7 +122,7 @@
                     android:id="@+id/insert_sale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Activity setup" />
+                    android:text="Other" />
 
             </LinearLayout>
         </LinearLayout>
