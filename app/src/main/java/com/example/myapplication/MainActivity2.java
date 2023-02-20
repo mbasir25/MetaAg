@@ -24,7 +24,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         insert_field.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),drawpoly.class)));
 
-        user_profile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), registration.class)));
+        user_profile.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), userDetail.class)));
 
         insert_operation.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), backg_gps.class)));
         view_data.setOnClickListener((View view) -> {

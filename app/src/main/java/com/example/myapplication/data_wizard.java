@@ -745,7 +745,7 @@ public class data_wizard extends AppCompatActivity {
 
     public void savedata(String fieldname, String en, String ex, TextView act, TextView cropt, TextView cropr, TextView act_type, TextView asset_use, TextView asset_desc, TextView asset_note, TextView implement,
                          TextView material, TextView material_SP, TextView mat_amount, TextView work_amount) {
-        String usern = "Sami"; // TODO get name automatically!
+        String usern = tinydb.getString("name"); // TODO get name automatically!
         String fieldn = fieldname;
         String ent = en;
         String ext = ex;

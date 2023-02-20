@@ -69,7 +69,15 @@ public class UserLogin extends AppCompatActivity {
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             if  (documentSnapshot.exists()){
                                                 String name = (String) documentSnapshot.get("Name");
+                                                String em = (String) documentSnapshot.get("Email");
+                                                String pn = (String) documentSnapshot.get("Phone");
+
                                                 tinyDB.putString("name", name);
+                                                tinyDB.putString("email", em);
+                                                tinyDB.putString("phone", pn);
+
+
+
                                                 startActivity(new Intent(getApplicationContext(), MainActivity2.class));
                                             }else{
                                                 Toast.makeText(UserLogin.this, "name doesn't exist", Toast.LENGTH_SHORT).show();

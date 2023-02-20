@@ -87,7 +87,7 @@ public class registration extends AppCompatActivity {
 //                            tinyDB.putString("UName", name );
 
 
-                            startActivity(new Intent(getApplicationContext(),MainActivity2.class));
+                            startActivity(new Intent(getApplicationContext(),UserLogin.class));
                             finish();
 
                         }
