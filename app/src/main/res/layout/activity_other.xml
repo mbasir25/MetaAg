@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".other">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#9500BCD4"
+            android:text="Add options"
+            android:textAlignment="center"
+            android:textSize="25dp" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop= "10dp">
+
+                    <Button
+                        android:id="@+id/act"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Activity"
+                        android:textColor="#1B1A1A"
+                        app:backgroundTint="#AED8D3D3"
+                        app:strokeColor="#918D8D"
+                        app:strokeWidth="1dp" />
+                    <LinearLayout
+                        android:id="@+id/act_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility = "gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/actview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Activity name" />
+
+                            <EditText
+                                android:id="@+id/act_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="Name"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/acttyp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Type" />
+
+                            <EditText
+                                android:id="@+id/act_sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="none"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/act_ad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="add" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/actlist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility ="gone"/>
+                    </LinearLayout>
+
+
+
+
+
+
+                    <Button
+                        android:id="@+id/power"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Power Unit"
+                        android:textColor="#1B1A1A"
+                        app:backgroundTint="#AED8D3D3"
+                        app:strokeColor="#918D8D"
+                        app:strokeWidth="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/pow_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility = "gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/assetview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Power Unit name" />
+
+                            <EditText
+                                android:id="@+id/pow_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="Name"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/asstyp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Specification" />
+
+                            <EditText
+                                android:id="@+id/pow_sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="none"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/asset_ad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="add" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/powlist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility ="gone"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/implem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Implement"
+                        android:textColor="#1B1A1A"
+                        app:backgroundTint="#AED8D3D3"
+                        app:strokeColor="#918D8D"
+                        app:strokeWidth="1dp" />
+                    <LinearLayout
+                        android:id="@+id/imp_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility = "gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/implview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Implement name" />
+
+                            <EditText
+                                android:id="@+id/impl_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="Name"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+
+
+                        <Button
+                            android:id="@+id/impl_ad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="add" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/impllist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility ="gone"/>
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/mat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Material"
+                        android:textColor="#1B1A1A"
+                        app:backgroundTint="#AED8D3D3"
+                        app:strokeColor="#918D8D"
+                        app:strokeWidth="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/mat_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility = "gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/matview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Material name" />
+
+                            <EditText
+                                android:id="@+id/mat_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="Name"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/mattyp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Specification" />
+
+                            <EditText
+                                android:id="@+id/mat_sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="none"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/mat_ad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="add" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/matlist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility ="gone"/>
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/crp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Crop"
+                        android:textColor="#1B1A1A"
+                        app:backgroundTint="#AED8D3D3"
+                        app:strokeColor="#918D8D"
+                        app:strokeWidth="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/crp_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility = "gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/crpview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Crop name" />
+
+                            <EditText
+                                android:id="@+id/crp_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:hint="Name"
+                                android:inputType="textPersonName" />
+                        </LinearLayout>
+
+
+
+                        <Button
+                            android:id="@+id/crp_ad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="add" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ListView
+                            android:id="@+id/crplist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility ="gone"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

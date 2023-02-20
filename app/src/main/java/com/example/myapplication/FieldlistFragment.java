@@ -5,8 +5,10 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -279,7 +281,7 @@ public class FieldlistFragment extends Fragment implements SelectListener{
                     getActivity().recreate();
 
                 }else{
-                    Toast.makeText(getContext(), "Insert correctly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Insert correct info", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -331,6 +333,9 @@ public class FieldlistFragment extends Fragment implements SelectListener{
 
 
         recyclerView.setAdapter(new fieldnameAdapter(fieldnameholder, this));
+
+
+
         return view;
 
     }

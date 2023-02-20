@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity2 extends AppCompatActivity {
-    Button user_profile, insert_field, insert_operation, view_data, settings;
+    Button user_profile, insert_field, insert_operation, view_data, settings, insert_opt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +20,7 @@ public class MainActivity2 extends AppCompatActivity {
         user_profile = findViewById(R.id.user_profile);
         view_data = findViewById(R.id.view_data);
         settings = findViewById(R.id.settings);
+        insert_opt = findViewById(R.id.insert_opt);
 
         insert_field.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),drawpoly.class)));
 
@@ -35,6 +36,13 @@ public class MainActivity2 extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), dataCash.class));
             }
         });
+        insert_opt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), other.class));
+            }
+        });
+
 
 
 //

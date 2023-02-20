@@ -9,6 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Button join;
+    TinyDB tinyDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
         join = findViewById(R.id.btn_join);
 
-        join.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),MainActivity2.class)));
+        join.setOnClickListener(view -> {
+
+            startActivity(new Intent(getApplicationContext(), MainActivity2.class));
+        });
 
     }
 }
