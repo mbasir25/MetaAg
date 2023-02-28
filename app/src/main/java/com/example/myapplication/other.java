@@ -338,7 +338,7 @@ public class other extends AppCompatActivity {
 
                     bot_row_model qname = new bot_row_model(powname);
 
-                    impl.push().child(powname).setValue(qname);
+                    impl.child(powname).setValue(qname);
 
                     implname.setText("");
 
@@ -504,7 +504,7 @@ public class other extends AppCompatActivity {
 
                     bot_row_model qname = new bot_row_model(powname);
 
-                    crop.push().child(powname).setValue(qname);
+                    crop.child(powname).setValue(qname);
                     crpname.setText("");
                 }
 

@@ -27,10 +27,10 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="399dp"
-        android:layout_height="544dp"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/field_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,16 +57,15 @@
 
     <LinearLayout
         android:id="@+id/linearLayout9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
         android:background="@color/white"
         android:orientation="horizontal"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map"
-        app:layout_constraintVertical_bias="0.975">
+        app:layout_constraintTop_toBottomOf="@id/field_name">
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -75,13 +74,6 @@
             android:layout_marginBottom="32dp"
             android:text="CheckBox" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/textView2"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_weight="1"-->
-        <!--            android:text="       "-->
-        <!--            tools:ignore="SpeakableTextPresentCheck" />-->
 
         <Button
             android:id="@+id/draw_map"
@@ -118,8 +110,13 @@
             android:id="@+id/save_field"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="Save" />
+            android:background="#b5b6b5"
+            android:padding="10dp"
+            android:text="Save"
+            android:textColor="#FDFAF9"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 

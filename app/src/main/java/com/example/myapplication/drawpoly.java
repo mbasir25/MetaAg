@@ -123,7 +123,7 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
                 polygon.remove();
 
             }
-            if (polyglist.size()>0){
+            if (polyglist.size()>=0){
                 for (Polygon polig : polyglist){
                     polig.remove();
                 }

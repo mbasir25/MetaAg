@@ -24,8 +24,9 @@
         android:layout_marginRight="8dp"
         android:background="@android:color/holo_green_dark"
         android:onClick="requestLocationUpdates"
-        android:text="request_updates"
-
+        android:text="Start Automatic tracking"
+        android:textColor = "#00BCD4"
+        app:backgroundTint="#CDC9C9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -44,7 +45,10 @@
         android:background="@android:color/holo_red_light"
         android:onClick="removeLocationUpdates"
 
-        android:text="remove_updates"
+        android:text="Stop Automatic tracking"
+        android:textColor="#E91E63"
+
+        app:backgroundTint="#CDC9C9"
         app:layout_constraintBottom_toTopOf="@+id/location_updates_result"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
