@@ -1,9 +1,13 @@
 package com.example.myapplication;
 
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -13,6 +17,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.internal.maps.zzad;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -21,21 +29,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.opencsv.CSVWriter;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class dataCash extends AppCompatActivity {
 
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference;
+    DatabaseReference mfields;
     TinyDB tinydb;
+    GoogleMap gMap;
+    Gson gson;
 
 
     String fileName = "your_file_name.csv";
@@ -55,12 +70,15 @@ public class dataCash extends AppCompatActivity {
 
 
         Button cashchat = findViewById(R.id.chat);
+        Button emaildata = findViewById(R.id.emaildata);
         Button download = findViewById(R.id.download);
+        Button polygcash = findViewById(R.id.polygcash);
 
         ListView showdata = findViewById(R.id.showdata);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference("Operation");
+        mfields = mFirebaseDatabase.getReference("Field");
         fields = new ArrayList<String>();
 
         ArrayList<String[]> dataList = new ArrayList<>();
@@ -148,7 +166,12 @@ public class dataCash extends AppCompatActivity {
                                 String currentDate = new SimpleDateFormat("dd_MM_yyyy", Locale.getDefault()).format(new Date());
                                 String currentTime = new SimpleDateFormat("HH_mm_ss", Locale.getDefault()).format(new Date());
                                 fileName = currentDate +"_"+currentTime+"_act_data.csv";
-                                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath(), fileName);
+                                String Dir = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).getAbsolutePath();
+                                File file = new File(Dir,fileName);
+
+
+
+
                                 try {
 
                                     FileWriter fileWriter = new FileWriter(file);
@@ -173,6 +196,52 @@ public class dataCash extends AppCompatActivity {
                             }
                         });
 
+                        emaildata.setOnClickListener(new View.OnClickListener() {     //!todo file provider should be used.
+                            @Override
+                            public void onClick(View v) {
+
+                                String currentDate = new SimpleDateFormat("dd_MM_yyyy", Locale.getDefault()).format(new Date());
+                                String currentTime = new SimpleDateFormat("HH_mm_ss", Locale.getDefault()).format(new Date());
+                                fileName = currentDate +"_"+currentTime+"_act_data.csv";
+                                String Dir = Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS).getAbsolutePath();
+                                File file = new File(Dir,fileName);
+
+
+
+
+                                try {
+
+                                    FileWriter fileWriter = new FileWriter(file);
+                                    CSVWriter csvWriter = new CSVWriter(fileWriter);
+
+                                    String[] headers = {"Field_Name", "Operator", "Entry_Time", "Duration", "Exit_Time", "Activity_Name", "Activity_Type", "Crop_Name", "Crop_Rate", "Power_Unit", "Power_Unit_description", "Note_Power_unit", "Implement_Name", "Material_Used", "Material_Type", "Material_Amount", "Extra_Note"};
+                                    csvWriter.writeNext(headers);
+
+
+                                    for (String[] dataarray : dataList) {
+                                        csvWriter.writeNext(dataarray);
+
+
+                                    }
+
+                                    csvWriter.close();
+                                    fileWriter.close();
+                                    Toast.makeText(dataCash.this, "Data exported successfully!! Dir: InternalStorage/Documents", Toast.LENGTH_LONG).show();
+                                }catch (IOException e) {
+                                    e.printStackTrace();
+
+                                }
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("text/csv");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "CSV Data");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(Dir+fileName));
+                                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"samifpm13@gmail.com"});
+
+                                startActivity(Intent.createChooser(intent, "Send Email"));
+
+                            }
+                        });
+
                     }
 
                 } else {
@@ -183,8 +252,53 @@ public class dataCash extends AppCompatActivity {
 
         });
 
+        ArrayList<String> newfieldList = new ArrayList<>();
+        mfields.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        for (DataSnapshot name : task.getResult().getChildren()) {
+                            ArrayList< String> field = new ArrayList<>();
+                            String fieldname = name.getKey();
+                            filed_holder poly = new filed_holder(name.getValue());
+                            HashMap polyg = (HashMap) poly.getPolygon();
+                            HashMap hash = (HashMap) polyg.get("polygon");
+                            List points = (List) hash.get("points");
+
+//                                    TinyDB tDB = new TinyDB(getApplicationContext());
+                            List<String> onefield = listOfField(fieldname, points);
+                            String newf = gson.toJson(onefield);
+                            newfieldList.add(newf);
+
+                        }
+                        tinydb = new TinyDB(getApplicationContext());
+                        polygcash.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                tinydb.putListString("cashedpolygons", newfieldList);
+                                Toast.makeText(dataCash.this, "Fields boundery cashed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    }
+                }else {
+                    Toast.makeText(dataCash.this, "Problem encountered ! ", Toast.LENGTH_SHORT).show();  // !TODO solve this issue. showing pronlem
+                }
+            }
+        });
+
 
 
     }
-
+    public List<String> listOfField(String name, List latLngList) {
+        gson = new Gson();
+        String jsonLatLng = gson.toJson(latLngList);
+        ArrayList<String> field = new ArrayList<>();
+        field.add(name);
+        field.add(jsonLatLng);
+//
+        return field;
+    }
 }

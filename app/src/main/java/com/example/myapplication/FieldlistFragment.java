@@ -228,16 +228,15 @@ public class FieldlistFragment extends Fragment implements SelectListener{
                 checkField(ext_time);
 
                 if (valid){
-                String name = namef.getText().toString();
-                String en_time = ent_time.getText().toString();
-                String en_date = ent_date.getText().toString();
-                String ex_time = ext_time.getText().toString();
-                String ex_date = ext_date.getText().toString();
-                String en = en_date + " "+en_time;
-                Long en_l = getlongDate(en);
-                String ex = ex_date+ " "+ex_time;
-                Long ex_l = getlongDate(ex);
-
+                    String name = namef.getText().toString();
+                    String en_time = ent_time.getText().toString();
+                    String en_date = ent_date.getText().toString();
+                    String ex_time = ext_time.getText().toString();
+                    String ex_date = ext_date.getText().toString();
+                    String en = en_date + " "+en_time;
+                    Long en_l = getlongDate(en);
+                    String ex = ex_date+ " "+ex_time;
+                    Long ex_l = getlongDate(ex);
 
 
                     Map<String, ?> Entries = PreferenceManager.getDefaultSharedPreferences(getContext()).getAll();
@@ -264,6 +263,7 @@ public class FieldlistFragment extends Fragment implements SelectListener{
                     }
                     if (WORKFIELDS == false) {
                         ArrayList<String> workedFieldList = new ArrayList<>();
+                        gson = new Gson();
 //                                ArrayList<List<String>> newList = new ArrayList<>();
                         List<Pair> newWorkField = listOfWorkinField("Sami", en_l, ex_l);
                         String fieldDescription = gson.toJson(newWorkField);
@@ -328,12 +328,7 @@ public class FieldlistFragment extends Fragment implements SelectListener{
         }
             // !TODO   only one field is showing up, also make them clickable!
 
-
-
-
-
         recyclerView.setAdapter(new fieldnameAdapter(fieldnameholder, this));
-
 
 
         return view;
@@ -353,10 +348,6 @@ public class FieldlistFragment extends Fragment implements SelectListener{
             tinydb.putString("exit", exit);
 
             startActivity(new Intent(getContext(), data_wizard.class));
-
-
-
-
 
     }
 

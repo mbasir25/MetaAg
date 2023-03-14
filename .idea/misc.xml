@@ -35,6 +35,18 @@
         <entry key="..\:/androidproject/app/src/main/res/layout/home.xml" value="0.1" />
         <entry key="..\:/androidproject/app/src/main/res/layout/op_row_toshow.xml" value="0.31926121372031663" />
         <entry key="..\:/androidproject/app/src/main/res/layout/single_row_fieldlsit.xml" value="0.22" />
+        <entry key="..\:/mataAg/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.19109772423025434" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_backg_gps.xml" value="0.360054347826087" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_data_cash.xml" value="0.3125" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_drawpoly.xml" value="0.67" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_get_gps.xml" value="0.360054347826087" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_insert_data.xml" value="0.360054347826087" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_login.xml" value="0.29739583333333336" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_main.xml" value="0.3125" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_main2.xml" value="0.3125" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_operation.xml" value="0.360054347826087" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_registration.xml" value="0.1" />
+        <entry key="..\:/mataAg/app/src/main/res/layout/activity_user_login.xml" value="0.29739583333333336" />
       </map>
     </option>
   </component>

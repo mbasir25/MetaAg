@@ -9,7 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView3"
@@ -17,8 +21,8 @@
             android:layout_height="wrap_content"
             android:text="Metadata options"
             android:textAlignment="center"
-            android:textSize = "20dp"
-            android:textStyle = "bold"
+            android:textSize="20dp"
+            android:textStyle="bold"
 
             />
 
@@ -26,8 +30,8 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please check your Internet connection. This page requires Internet."
-            android:layout_margin = "6dp"/>
+            android:layout_margin="6dp"
+            android:text="Please check your Internet connection. This page requires Internet." />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,18 +42,26 @@
                 android:id="@+id/download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Download data"
-                android:layout_margin = "10dp"/>
+                android:text="Download data" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/polygcash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Add options"
-                android:layout_margin = "10dp"/>
+                android:text="Cache all fields "
+                app:backgroundTint="#0D7E73" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/emaildata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email operation details (usermail)" />
+
 
         <Button
             android:id="@+id/chat"
