@@ -123,7 +123,8 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
                 polygon.remove();
 
             }
-            if (polyglist.size()>=0){
+
+            if (polyglist!= null && polyglist.size()!=0){
                 for (Polygon polig : polyglist){
                     polig.remove();
                 }
@@ -132,6 +133,8 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
             latLngList.clear();
 
             checkBox.setChecked(false);
+
+            fshowpoly.setEnabled(true);
 
         });
 
@@ -275,6 +278,8 @@ public class drawpoly extends AppCompatActivity implements OnMapReadyCallback {
                         }
                     }
                 }
+
+                fshowpoly.setEnabled(false);
             }
         });
 
