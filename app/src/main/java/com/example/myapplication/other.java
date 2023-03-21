@@ -249,7 +249,7 @@ public class other extends AppCompatActivity {
 
                     boolean exist = false;
 
-                    for (String name:materiallist){
+                    for (String name:pnames){
                         if (powname.equals(name)) {
                             asset.child(name).child("specify").push().setValue(psp);
                             exist = true;

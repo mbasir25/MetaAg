@@ -231,11 +231,20 @@ public class dataCash extends AppCompatActivity {
                                     e.printStackTrace();
 
                                 }
+
+                                Uri fileUri = FileProvider.getUriForFile(
+                                        getApplicationContext(),
+                                        BuildConfig.APPLICATION_ID + ".fileprovider",
+                                        file);
+
                                 Intent intent = new Intent(Intent.ACTION_SEND);
                                 intent.setType("text/csv");
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "CSV Data");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(Dir+fileName));
+                                intent.putExtra(Intent.EXTRA_STREAM, fileUri);
                                 intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"samifpm13@gmail.com"});
+
+// Grant temporary read permission to the content URI
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                                 startActivity(Intent.createChooser(intent, "Send Email"));
 

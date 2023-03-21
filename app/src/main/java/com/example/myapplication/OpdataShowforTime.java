@@ -12,6 +12,9 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class OpdataShowforTime extends AppCompatActivity {
     opAdapter opadapter;
 
@@ -24,7 +27,13 @@ public class OpdataShowforTime extends AppCompatActivity {
         String fname =intent.getStringExtra("fNAME");
         String fTime = intent.getStringExtra("lTIME");
 
-        String toText = "Activity details for "+fname + " at " + fTime;
+        long tim = Long.parseLong(fTime);
+        Date entext = new Date(tim);
+        SimpleDateFormat timeformater = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
+        String entExtTime = timeformater.format(entext);
+
+
+        String toText = "Activity details for "+fname + " at " + "\n" + entExtTime;
 
         TextView texts = findViewById(R.id.fieldTime);
         texts.setText(toText);
