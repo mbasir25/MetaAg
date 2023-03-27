@@ -60,7 +60,8 @@
             android:id="@+id/emaildata"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email operation details (usermail)" />
+            android:text="Email operation details (usermail)"
+            android:visibility= "gone"/>
 
 
         <Button
