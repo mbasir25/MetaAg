@@ -1,0 +1,3 @@
+[submodule "metaAg_1_1"]
+	path = metaAg_1_1
+	url = https://github.com/mbasir25/MetaAg.git
